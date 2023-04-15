@@ -1,0 +1,26 @@
+
+{
+    "name": "Warehouse for Triyudha",
+    "summary": "Warehouse for Triyudha",
+    "version": "14.0",
+    "author": "Meyrina Herawati",
+    "category": "Warehouse Management",
+    "depends": ["stock","stock_request",'stock_request_submit'],
+    "data": [
+        # "security/stock_request_security.xml",
+        "security/ir.model.access.csv",
+        "views/product_view.xml",
+        "views/product_motif_view.xml",
+        "views/stock_request_type_view.xml",
+        "views/stock_request_view.xml",
+        # "views/stock_request_views.xml",
+        # "views/stock_request_allocation_views.xml",
+        # "views/stock_move_views.xml",
+        # "views/stock_picking_views.xml",
+        # "views/stock_request_order_views.xml",
+        # "views/res_config_settings_views.xml",
+        # "views/stock_request_menu.xml",
+        # "data/stock_request_sequence_data.xml",
+    ],
+    "installable": True,
+}

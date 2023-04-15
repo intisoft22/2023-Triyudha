@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record id="view_template_property_form" model="ir.ui.view">
+            <field name="name">product.template.stock.property.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='group_lots_and_weight']" position="inside">
+                    <field name="type_spec"/>
+                    <field name="bentuk"/>
+                    <label for="dia" attrs="{'invisible': [('bentuk', '!=', 'bulat')]}"/>
+                    <div attrs="{'invisible': [('bentuk', '!=', 'bulat')]}">
+                        <field name="dia" class="oe_inline" style="vertical-align:baseline"/> mm
+                    </div>
+                    <label for="dia_inc" attrs="{'invisible': [('bentuk', '!=', 'bulat')]}"/>
+                    <div attrs="{'invisible': [('bentuk', '!=', 'bulat')]}">
+                        <field name="dia_inc" class="oe_inline" style="vertical-align:baseline"/> inc
+                    </div>
+                    <label for="panjang" attrs="{'invisible': [('bentuk', '!=', 'kotak')]}"/>
+                    <div attrs="{'invisible': [('bentuk', '!=', 'kotak')]}">
+                        <field name="panjang" class="oe_inline" style="vertical-align:baseline"/> mm
+                    </div>
+                    <label for="lebar" attrs="{'invisible': [('bentuk', '!=', 'kotak')]}"/>
+                    <div attrs="{'invisible': [('bentuk', '!=', 'kotak')]}">
+                        <field name="lebar" class="oe_inline" style="vertical-align:baseline"/> mm
+                    </div>
+                    <label for="tebal" attrs="{'invisible': [('bentuk', '!=', 'kotak')]}"/>
+                    <div attrs="{'invisible': [('bentuk', '!=', 'kotak')]}">
+                        <field name="tebal" class="oe_inline" style="vertical-align:baseline"/> mm
+                    </div>
+                    <field name="khl"/>
+                    <field name="motif"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

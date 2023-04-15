@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_location_route_form_view_in" model="ir.ui.view">
+            <field name="name">stock.location.route.form</field>
+            <field name="inherit_id" ref="stock.stock_location_route_form_view"/>
+            <field name="model">stock.location.route</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sequence']" position="after">
+
+                    <field name="initial"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="stock_request_order_form_in">
+            <field name="name">stock.request.order.form</field>
+            <field name="model">stock.request.order</field>
+            <field name="priority">16</field>
+            <field name="inherit_id" ref="stock_request.stock_request_order_form"/>
+            <field name="arch" type="xml">
+                <field name="state" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,open,done"/>
+                </field>
+                <field name="expected_date" position="before">
+                    <field name="type_id" options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                    <field name="src_warehouse_id" invisible="1"/>
+                    <field name="src_location_id" invisible="1"/>
+                </field>
+                <field name="expected_date" position="attributes">
+                    <attribute name="string">Tanggal Dibutuhkan</attribute>
+                </field>
+                <field name="picking_policy" position="after">
+                    <field name="categ_id" options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                </field>
+                <field name="warehouse_id" position="attributes">
+                    <attribute name="string">To Warehouse</attribute>
+                </field>
+                <field name="location_id" position="attributes">
+                    <attribute name="string">To Location</attribute>
+                    <attribute name="readonly">1</attribute>
+                </field>
+                <field name="location_id" position="before">
+                    <field name="route_id"/>
+                </field>
+                <xpath expr="//field[@name='stock_request_ids']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//notebook/page[@name='items']" position="after">
+
+                    <page name="info" string="Info">
+                        <group>
+                            <field name="send_date"/>
+                            <field name="receive_date"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
