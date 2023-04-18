@@ -30,17 +30,17 @@ class PurchaseOrder(models.Model):
                 rec.deliver_to_domain = json.dumps([
                     ('code', '=', 'incoming'),
                     ('product_category', 'child_of', rec.product_category.id),
-                    # '|',
-                    # ('warehouse_id', '=', False),
-                    # ('warehouse_id.company_id', '=', 'company_id'),
+                    '|',
+                    ('warehouse_id', '=', False),
+                    ('warehouse_id.company_id', '=', rec.company_id.id),
                     ])
             else:
                 rec.deliver_to_domain = json.dumps([
                     ('code', '=', 'incoming'),
                     ('product_category', 'child_of', 0),
-                    # '|',
-                    # ('warehouse_id', '=', False),
-                    # ('warehouse_id.company_id', '=', 'company_id'),
+                    '|',
+                    ('warehouse_id', '=', False),
+                    ('warehouse_id.company_id', '=', rec.company_id.id),
                     ])
 
 class PurchaseOrderLine(models.Model):
