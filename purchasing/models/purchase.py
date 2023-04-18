@@ -58,9 +58,21 @@ class PurchaseOrderLine(models.Model):
     def _compute_product_id_domain(self):
         for rec in self:
             if rec.product_category:
-                rec.product_id_domain = json.dumps([('categ_id', 'child_of', rec.product_category.id)])
+                rec.product_id_domain = json.dumps([
+                    ('purchase_ok', '=', True),
+                    ('categ_id', 'child_of', rec.product_category.id),
+                    '|',
+                    ('company_id', '=', False),
+                    ('company_id', '=', rec.company_id.id),
+                    ])
             else:
-                rec.product_id_domain = json.dumps([('categ_id', 'child_of', 0)])
+                rec.product_id_domain = json.dumps([
+                    ('purchase_ok', '=', True),
+                    ('categ_id', 'child_of', 0),
+                    '|',
+                    ('company_id', '=', False),
+                    ('company_id', '=', rec.company_id.id),
+                ])
 
 
 class StockPicking(models.Model):
