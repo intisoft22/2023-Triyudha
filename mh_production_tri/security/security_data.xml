@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.module.category" id="module_category_production">
+        <field name="name">Production Settings</field>
+        <field name="sequence">4</field>
+        <field name="visible" eval="1"/>
+    </record>
+
+    <record id="group_confirm_delivery_production" model="res.groups">
+        <field name="name">Confirm Delivery Production</field>
+        <field name="category_id" ref="mh_production_tri.module_category_production"/>
+    </record>
+
+
+</odoo>

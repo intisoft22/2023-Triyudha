@@ -5,7 +5,7 @@
     "version": "14.0",
     "author": "Meyrina Herawati",
     "category": "Warehouse Management",
-    "depends": ["stock","stock_request",'stock_request_submit'],
+    "depends": ["stock","stock_request",'stock_request_submit','web_domain_field','dev_picking_cancel'],
     "data": [
         # "security/stock_request_security.xml",
         "security/ir.model.access.csv",
