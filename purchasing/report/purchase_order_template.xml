@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_purchase_order_pdf">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+                <t t-set="data_report_margin_top" t-value="8"/>
+                <div class="page" style="page-break-before: always;">
+                    <style type="text/css">
+                        table {
+                        border-collapse: collapse;
+                        width: 100%;
+                        margin: 0 auto;
+
+                        }
+                    </style>
+                    <div class="row" style="margin-bottom:15px; font-size:18px;">
+                        <t t-if="not o" t-set="o" t-value="docs"/>
+                        <t t-if="not company">
+                            <!-- Multicompany -->
+                            <t t-if="company_id">
+                                <t t-set="company" t-value="company_id"/>
+                            </t>
+                            <t t-elif="o and 'company_id' in o">
+                                <t t-set="company" t-value="o.company_id.sudo()"/>
+                            </t>
+                            <t t-else="else">
+                                <t t-set="company" t-value="res_company"/>
+                            </t>
+                        </t>
+
+                        <div class="col-2" style="margin-top: 15px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                             class="float-left"
+                                             alt="Logo" style="width: 140px;"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-10" style="margin-left: 20px;">
+                            <table>
+                                <tr>
+                                    <td width="100%" style="font-size:30px; text-transform: uppercase;">
+                                        <strong>
+                                            <span t-field="company.name"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" style="font-size:25px; text-transform: uppercase;">
+                                        <span t-field="company.desc"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" style="font-size:18px; text-transform: uppercase;">
+                                        <strong>
+                                            <span t-field="company.street"/>
+                                            <span>-</span>
+                                            <span t-field="company.city"/>
+                                            <br/>
+                                            <span>Telp.</span>
+                                            <span t-field="company.phone"/>
+                                            <span>- Fax.</span>
+                                            <span t-field="company.phone"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <hr style="border: 2px solid; margin-bottom: 30px"/>
+
+                    <div class="row">
+                        <table>
+                            <tr>
+                                <td width="100%" class="text-center" style="font-size:25px;">
+                                    <b>
+                                        <u>ORDER PEMBELIAN</u>
+                                    </b>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td width="100%" class="text-center" style="font-size:20px; ">
+                                    <span>
+                                        <b>No.
+                                            <span t-field="o.name"/>
+                                        </b>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="row" style="margin-top:25px; font-size:18px;">
+                        <div class="col-6">
+                            <table>
+                                <tr>
+                                    <td width="30%">
+                                        <span>
+                                            <b>Kepada</b>
+                                        </span>
+                                    </td>
+                                    <td width="70%">:
+                                        <span t-field="o.partner_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="30%">
+                                        <span>
+                                            <b>Up</b>
+                                        </span>
+                                    </td>
+                                    <td width="70%">:
+                                        <span t-field="o.up_contact"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="30%">
+                                        <span>
+                                            <b>No. Fax</b>
+                                        </span>
+                                    </td>
+                                    <td width="70%">:
+                                        <span t-field="o.partner_id.no_fax"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <table>
+                                <tr>
+                                    <td width="30%">
+                                        <span>
+                                            <b>Tanggal</b>
+                                        </span>
+                                    </td>
+                                    <td width="70%">:
+                                        <span t-field="o.date_approve"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:25px; font-size:18px;">
+                        <t t-if="o.order_line">
+                            <table class="table" style="border: 1px solid black !important;" name="product">
+                                <thead style="border: 1px solid black;">
+                                    <tr>
+                                        <th name="th_no" class="text-center"
+                                            style="border: 1px solid black !important;">
+                                            <span>No.</span>
+                                        </th>
+                                        <th name="th_nama_barang" class="text-center"
+                                            style="border: 1px solid black !important;">
+                                            <span>Nama Barang</span>
+                                        </th>
+                                        <th name="th_spesifikasi" class="text-center"
+                                            style="border: 1px solid black !important;">
+                                            <span>Spesifikasi</span>
+                                        </th>
+                                        <th name="th_jumlah" class="text-center"
+                                            style="border: 1px solid black !important;">
+                                            <span>Jumlah</span>
+                                        </th>
+                                        <th name="th_harga" class="text-center"
+                                            style="border: 1px solid black !important;">
+                                            <span>Harga</span>
+                                        </th>
+                                        <th name="th_keterangan" class="text-center"
+                                            style="border: 1px solid black !important;">
+                                            <span>Keterangan</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <t t-set="line_count" t-value="0"/>
+                                <t t-foreach="o.order_line" t-as="line">
+                                    <t t-set="line_count" t-value="line_count + 1"/>
+                                    <tr>
+                                        <td style="border: 1px solid black !important;">
+                                            <t t-esc="line_count"/>
+                                        </td>
+                                        <td style="border: 1px solid black !important;">
+                                            <span t-field="line.product_id"/>
+                                        </td>
+                                        <td style="border: 1px solid black !important;">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td style="border: 1px solid black !important;">
+                                            <span t-field="line.product_qty"/>
+                                        </td>
+                                        <td style="border: 1px solid black !important;">
+                                            <span t-field="line.price_unit"/>
+                                        </td>
+                                        <td style="border: 1px solid black !important;">
+                                            <span t-field="line.note"/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                                <tr>
+                                    <td colspan="6" style="border: 1px solid black !important;">
+                                        <strong>Dengan ketentuan sebagai berikut:</strong>
+                                        <br/>
+                                        <span>1. Pengiriman :</span>
+                                        <span t-field="o.shipment_term"/>
+                                        <br/>
+                                        <span>2. Sistem Pembayaran :</span>
+                                        <span t-field="o.payment_term_id"/>
+                                        <br/>
+                                        <span>3. Lain - lain :</span>
+                                        <span t-field="o.others"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2" style="border: 1px solid black !important;">
+
+                                    </td>
+                                    <td colspan="2" style="border: 1px solid black !important;">
+                                        <strong>Menyetujui</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                    <td colspan="2" style="border: 1px solid black !important;">
+                                        <strong>Pemesan Order</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

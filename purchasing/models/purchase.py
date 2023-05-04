@@ -8,6 +8,13 @@ from odoo import api, fields, models
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
+    up_contact = fields.Many2one('res.partner',  readonly=False, string="Up Contact")
+    up_contact_domain = fields.Char(
+        compute="_compute_up_contact_domain",
+        readonly=True,
+        store=False,
+    )
+
     product_category = fields.Many2one('product.category', string="Product Category", domain=[('parent_id', '=', False)], required=True)
     shipment_term = fields.Char(string='Shipment Term')
     others = fields.Char(string='Others')
@@ -43,10 +50,28 @@ class PurchaseOrder(models.Model):
                     ('warehouse_id.company_id', '=', rec.company_id.id),
                     ])
 
+    @api.onchange('partner_id')
+    def _compute_up_contact_domain(self):
+        for rec in self:
+            if rec.partner_id:
+                rec.up_contact_domain = json.dumps([
+                    ('parent_id', '=', rec.partner_id.id),
+                    ('active', '=', True),
+                    ('type', '=', 'contact'),
+                ])
+            else:
+                rec.up_contact_domain = json.dumps([
+                    ('parent_id', '=', 0),
+                    ('active', '=', True),
+                    ('type', '=', 'contact'),
+                ])
+
+
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
     product_category = fields.Many2one('product.category', string="Product Category", domain=[('parent_id', '=', False)])
+    note = fields.Char(string='Note')
 
     product_id_domain = fields.Char(
         compute="_compute_product_id_domain",
@@ -85,3 +110,15 @@ class PickingType(models.Model):
     _inherit = 'stock.picking.type'
 
     product_category = fields.Many2one('product.category', string="Product Category", domain=[('parent_id', '=', False)])
+
+    
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    no_fax = fields.Char(string='No. Fax')
+
+class ResCompany(models.Model):
+    _inherit = 'res.company'
+
+    no_fax = fields.Char(string='Fax')
+    desc = fields.Text(string='Description')
