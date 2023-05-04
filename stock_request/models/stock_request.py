@@ -198,13 +198,15 @@ class StockRequest(models.Model):
         if self.order_id and self.order_id.location_id != self.location_id:
             raise ValidationError(_("Location must be equal to the order"))
 
-    @api.constrains("order_id", "procurement_group_id")
-    def check_order_procurement_group(self):
-        if (
-            self.order_id
-            and self.order_id.procurement_group_id != self.procurement_group_id
-        ):
-            raise ValidationError(_("Procurement group must be equal to the order"))
+    # @api.constrains("order_id", "procurement_group_id")
+    # def check_order_procurement_group(self):
+    #     print(self.procurement_group_id)
+    #     print(self.order_id.procurement_group_id)
+    #     if (
+    #         self.order_id
+    #         and self.order_id.procurement_group_id != self.procurement_group_id
+    #     ):
+    #         raise ValidationError(_("Procurement group must be equal to the order"))
 
     @api.constrains("order_id", "company_id")
     def check_order_company(self):

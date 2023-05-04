@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="stock_request_order_form_prod_manu">
+        <field name="name">stock.request.order.prod.form</field>
+        <field name="model">stock.request.order.prod</field>
+        <field name="priority">25</field>
+        <field name="inherit_id" ref="mh_production_tri.stock_request_order_prod_form_in"/>
+        <field name="arch" type="xml">
+            <field name="type_id" position="replace">
+
+
+                <field name="delivery_prod" invisible="1"/>
+                <field name="requested_by" invisible="1"/>
+                <field name="type_id_domain" invisible="1"/>
+                <field name="type_id" options="{'no_create_edit': True, 'no_quick_create': True}"
+                       domain="type_id_domain"/>
+            </field>
+
+                <xpath expr="//field[@name='stock_request_ids']/tree/field[@name='product_id']" position="replace">
+
+                    <field name="categ_id" invisible="1" />
+                    <field name="product_id" domain="product_id_domain"/>
+                    <field name="product_id_domain" invisible="1"/>
+                </xpath>
+
+            <!--                <button name="action_confirm" position="after">-->
+            <!--                    <button name="action_create_pengiriman"-->
+            <!--                            string="Create Delivery" type="object" class="oe_highlight"-->
+            <!--                            attrs="{'invisible': ['|',('state', 'not in', ['submitted']),('delivery_prod', '=', False)]}"/>-->
+            <!--                </button>-->
+            <xpath expr="//field[@name='stock_request_ids']" position="attributes">
+                <attribute name="context">{
+                    'default_expected_date': expected_date,
+                    'default_picking_policy': picking_policy,
+                    'default_warehouse_id': warehouse_id,
+                    'default_location_id': location_id,
+                    'default_categ_id': categ_id,
+                    'default_route_id': route_id,
+                    'default_procurement_group_id': procurement_group_id,
+                    'default_company_id': company_id,
+                    'default_category': category,
+                    'default_state': state,
+                    'default_delivery_prod': delivery_prod,
+                    }
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
