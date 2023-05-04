@@ -11,6 +11,15 @@
                 <field name="product_category"/>
             </xpath>
 
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="up_contact_domain" invisible="1"/>
+                <field name="up_contact"/>
+            </xpath>
+
+            <xpath expr="//field[@name='up_contact']" position="attributes">
+                <attribute name="domain">up_contact_domain</attribute>
+            </xpath>
+
             <xpath expr="//field[@name='fiscal_position_id']" position="after">
                 <field name="shipment_term"/>
                 <field name="others"/>
@@ -24,6 +33,10 @@
             <xpath expr="//tree/field[@name='product_id']" position="before">
                 <field name="product_id_domain" invisible="1"/>
                 <field name="product_category" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//tree/field[@name='price_subtotal']" position="after">
+                <field name="note" />
             </xpath>
 
             <xpath expr="//field[@name='order_line']" position="attributes">
@@ -64,4 +77,42 @@
 
         </field>
     </record>
+
+    <record id="view_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.inherited</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='website']" position="before">
+                <field name="no_fax"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_company_form_inherit" model="ir.ui.view">
+        <field name="name">res.company.inherited</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='favicon']" position="after">
+                <field name="no_fax"/>
+                <field name="desc"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_reporting"
+              name="Reporting"
+              groups="purchase.group_purchase_manager"
+              action="purchase.action_purchase_order_report_all"
+              parent="purchase.purchase_report"
+              sequence="10"/>
+
+    <menuitem id="menu_register_pembelian"
+              name="Register Pembelian"
+              action="action_register_pembelian"
+              parent="purchase.purchase_report"
+              sequence="20"/>
 </odoo>
