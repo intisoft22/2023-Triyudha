@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sale_order_custom_form_view">
+            <field name="name">res.partner.inherite.view.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="function" position="before">
+                    <field name="id_card_no" attrs="{'invisible': [('company_type', '=', 'company')]}"/>
+                </field>
+                <xpath expr="//field[@name='team_id']" position="attributes">
+                        <attribute name="string">Salesman</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
