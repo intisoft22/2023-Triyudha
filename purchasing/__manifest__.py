@@ -14,10 +14,10 @@
     ],
     'data': [
         'security/ir.model.access.csv',
+        'wizard/register_pembelian_view.xml',
         'views/purchase.xml',
         'report/report.xml',
         'report/purchase_order_template.xml',
-        'wizard/register_pembelian_view.xml',
     ],
     'installable': True,
     'auto_install': False,
