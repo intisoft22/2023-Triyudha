@@ -68,11 +68,39 @@ class RegisterPembelianWizard(models.TransientModel):
                 for fa_ln in fa.invoice_line_ids:
                     total_quantity += fa_ln.quantity
 
-                    dpp = fa_ln.price_unit
-                    ppn = 11/100 * fa_ln.price_unit
-                    pph23 = 2/100 * dpp
-                    pph22 = 1.5/100 * dpp
-                    jumlah = dpp + ppn - (pph23/pph22)
+                    tax_name = []
+                    tax_amount = []
+                    for it in fa_ln.tax_ids:
+                        tax_name.append(it.name)
+                        tax_val = {
+                            it.name : it.amount
+                        }
+                        tax_amount.append(tax_val)
+
+                    price_subtotal = fa_ln.price_unit * fa_ln.quantity
+                    if 'PPN (INCL)' in tax_name:
+                        dpp = (100/111) * price_subtotal
+                        ppn = (11/111) * price_subtotal
+                    elif 'PPN (EXCL)' in tax_name:
+                        dpp = price_subtotal
+                        ppn = (11 / 100) * price_subtotal
+                    else:
+                        dpp = price_subtotal
+                        ppn = 0
+
+                    if 'PPH 23' in tax_name:
+                        pph23_amount = [d['PPH 23'] for d in tax_amount if 'PPH 23' in d]
+                        pph23 = pph23_amount[0] / 100 * dpp
+                    else:
+                        pph23 = 0
+
+                    if 'PPH 22' in tax_name:
+                        pph22_amount = [d['PPH 22'] for d in tax_amount if 'PPH 22' in d]
+                        pph22 = pph22_amount[0] / 100 * dpp
+                    else:
+                        pph22 = 0
+
+                    jumlah = dpp + ppn + pph23 + pph22
 
                     total_dpp += dpp
                     total_ppn += ppn
@@ -90,9 +118,9 @@ class RegisterPembelianWizard(models.TransientModel):
                             'coa': fa_ln.account_id.name,
                             'dpp': dpp,
                             'ppn': ppn,
-                            'pph23': pph23,
+                            'pph23': abs(pph23),
                             'pph22': pph22,
-                            'jumlah': jumlah,
+                            'jumlah': abs(jumlah),
                             }
                     today_val.append(new_val)
 
@@ -103,9 +131,9 @@ class RegisterPembelianWizard(models.TransientModel):
             'vals': vals,
             'total_dpp': total_dpp,
             'total_ppn': total_ppn,
-            'total_pph23': total_pph23,
+            'total_pph23': abs(total_pph23),
             'total_pph22': total_pph22,
-            'total_jumlah': total_jumlah,
+            'total_jumlah': abs(total_jumlah),
             'total_quantity': total_quantity,
             'month': month2name(int(self.month)),
             'year': str(self.year),
