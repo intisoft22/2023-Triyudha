@@ -116,7 +116,7 @@
                                         </span>
                                     </td>
                                     <td width="70%">:
-                                        <span t-field="o.up_contact"/>
+                                        <span t-field="o.name_up_contact"/>
                                     </td>
                                 </tr>
                                 <tr>

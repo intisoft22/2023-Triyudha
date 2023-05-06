@@ -24,6 +24,12 @@ class PurchaseOrder(models.Model):
         store=False,
     )
 
+    name_up_contact = fields.Char(
+        compute="_compute_name_up_contact",
+        readonly=True,
+        store=False,
+    )
+
     @api.onchange('product_category')
     def _onchange_product_category(self):
         for rec in self:
@@ -65,6 +71,12 @@ class PurchaseOrder(models.Model):
                     ('active', '=', True),
                     ('type', '=', 'contact'),
                 ])
+
+    @api.onchange('up_contact')
+    def _compute_name_up_contact(self):
+        for rec in self:
+            rec.name_up_contact = rec.up_contact.name
+
 
 
 class PurchaseOrderLine(models.Model):
