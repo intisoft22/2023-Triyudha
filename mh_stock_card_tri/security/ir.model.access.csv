@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_card_sc,stock card sc user,model_stock_card,mh_stock_card_tri.group_stock_card,1,1,1,1
+access_stock_card_line_sc,stock card line sc user,model_stock_card_line,mh_stock_card_tri.group_stock_card,1,1,1,1
+access_stock_card_line_detail_sc,stock card line sc user,model_stock_card_line_detail,mh_stock_card_tri.group_stock_card,1,1,1,1
+access_stock_card_user_warehouse,stock card wh user,model_stock_card,stock.group_stock_user,1,1,0,0
