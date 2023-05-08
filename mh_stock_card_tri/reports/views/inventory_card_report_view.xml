@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form untuk memilih inventory.card person dan tanggal mulai dan tanggal akhir -->
+        <record id="invetory_card_report_wizard_form" model="ir.ui.view">
+            <field name="name">Inventory Card Report</field>
+            <field name="model">inventory.card.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Inventory Card Report in Excel Format">
+                    <group>
+                        <group>
+
+                            <label for="tglawal"  string="Periode"/>
+
+                            <div>
+                                <field name="tglawal" class="oe_inline"/>
+                                -
+                                <field name="tglakhir" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+
+                            <field name="location_id"/>
+                            <field name="categ_id"/>
+                            <field name="product_ids" widget="many2many_tags"/>
+
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="get_excel_report" string="Export (XLS)" type="object"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action untuk membuka form diatas -->
+        <record model="ir.actions.act_window" id="action_open_invetory_card_report_wizard_form">
+            <field name="name">Inventory Card Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">inventory.card.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Tambah menu baru di Sale >> Reportng -->
+        <menuitem name="Inventory Card Report"
+                  id="menu_inventory_card_report_in_excel"
+                  parent="stock.menu_warehouse_report"
+                  action="action_open_invetory_card_report_wizard_form" groups="mh_stock_card_tri.group_stock_card"/>
+
+
+    </data>
+</odoo>

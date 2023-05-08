@@ -34,22 +34,23 @@ class stock_picking(models.Model):
                     if move.product_id.type == 'product':
                         # print(location)
                         # print(self.order_id.warehouse_id.pick_type_id.default_location_src_id.name)
-                        qty_onhand = move.product_id.with_context(location=location)._compute_quantities_dict(
-                            self._context.get('lot_id'),
-                            self._context.get('owner_id'),
-                            self._context.get('package_id'),
-                            self._context.get('from_date'),
-                            self._context.get('to_date'))
-                        # print(qty_onhand)
-                        # print("teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-                        onhand_qty = qty_onhand[move.product_id.id]['qty_available']
-                        outgoing = qty_onhand[move.product_id.id]['outgoing_qty']
-                        incoming = qty_onhand[move.product_id.id]['incoming_qty']
-                        ready = onhand_qty - outgoing + incoming
-                        selisih = ready - move.quantity_done
-                        # print(selisih)
-                        if selisih < 0:
-                            aman = False
+                        if move.location_dest_id.usage == 'internal':
+                            qty_onhand = move.product_id.with_context(location=location)._compute_quantities_dict(
+                                self._context.get('lot_id'),
+                                self._context.get('owner_id'),
+                                self._context.get('package_id'),
+                                self._context.get('from_date'),
+                                self._context.get('to_date'))
+                            # print(qty_onhand)
+                            # print("teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+                            onhand_qty = qty_onhand[move.product_id.id]['qty_available']
+                            outgoing = qty_onhand[move.product_id.id]['outgoing_qty']
+                            incoming = qty_onhand[move.product_id.id]['incoming_qty']
+                            ready = onhand_qty - outgoing + incoming
+                            selisih = ready - move.quantity_done
+                            # print(selisih)
+                            if selisih < 0:
+                                aman = False
 
                 if not aman2:
                     raise UserError(_("You cannot cancel this document! (Other document not cancelled)"))

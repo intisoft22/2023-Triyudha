@@ -9,13 +9,13 @@
 
     <record id="group_confirm_sr" model="res.groups">
         <field name="name">Confirm Stock Request</field>
-        <field name="category_id" ref="in_warehouse.module_category_warehouse"/>
+        <field name="category_id" ref="mh_warehouse_tri.module_category_warehouse"/>
     </record>
 
 
     <record id="group_report_wh" model="res.groups">
         <field name="name">View Report Warehouse</field>
-        <field name="category_id" ref="in_warehouse.module_category_warehouse"/>
+        <field name="category_id" ref="mh_warehouse_tri.module_category_warehouse"/>
     </record>
 
 </odoo>

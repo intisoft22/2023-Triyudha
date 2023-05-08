@@ -9,10 +9,12 @@
     "data": [
         # "security/stock_request_security.xml",
         "security/ir.model.access.csv",
+        "security/security_data.xml",
         "views/product_view.xml",
         "views/product_motif_view.xml",
         "views/stock_request_type_view.xml",
         "views/stock_request_view.xml",
+        "views/warehouse_view.xml",
         # "views/stock_request_views.xml",
         # "views/stock_request_allocation_views.xml",
         # "views/stock_move_views.xml",
