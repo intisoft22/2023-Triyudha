@@ -8,6 +8,13 @@
                 <field name="function" position="before">
                     <field name="id_card_no" attrs="{'invisible': [('company_type', '=', 'company')]}"/>
                 </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="sale_order_custom_form_view">
+            <field name="name">res.partner.inherite.view.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="sales_team.res_partner_view_team"/>
+            <field name="arch" type="xml">
                 <xpath expr="//field[@name='team_id']" position="attributes">
                         <attribute name="string">Salesman</attribute>
                 </xpath>
@@ -15,3 +22,4 @@
         </record>
     </data>
 </odoo>
+
