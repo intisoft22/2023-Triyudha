@@ -115,4 +115,16 @@
               action="action_register_pembelian"
               parent="purchase.purchase_report"
               sequence="20"/>
+
+    <menuitem id="menu_kartu_hutang"
+              name="Kartu Hutang"
+              action="action_kartu_hutang"
+              parent="purchase.purchase_report"
+              sequence="30"/>
+
+    <menuitem id="menu_kartu_hutang_accounting"
+              name="Kartu Hutang"
+              action="action_kartu_hutang"
+              parent="account.menu_finance_reports"
+              sequence="100"/>
 </odoo>
