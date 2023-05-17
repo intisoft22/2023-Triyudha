@@ -1,0 +1,13 @@
+<odoo>
+    <!-- Menu item -->
+    <!-- <menuitem id="menu_generate_multi_pricelist" name="Generate Multi Pricelist" parent="sale.product_menu_catalog" sequence="10"/> -->
+    <!-- Action -->
+    <record id="action_generate_multi_pricelist" model="ir.actions.act_window">
+        <field name="name">Generate Multi Pricelist</field>
+        <field name="res_model">product.pricelist</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <!-- Menu action -->
+    <menuitem id="menu_action_generate_multi_pricelist" name="Generate Multi Pricelist" parent="sale.product_menu_catalog" action="action_generate_multi_pricelist" sequence="10"/>
+</odoo>
