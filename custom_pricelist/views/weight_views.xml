@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <!-- sale.order.line form view extension -->
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_uom_qty']" position="after">
+                    <field name="custom_weight"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- sale.order.line tree view extension -->
+        <!-- <record id="view_order_tree_inherit" model="ir.ui.view">
+            <field name="name">sale.order.line.tree.inherit</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_uom_qty']" position="after">
+                    <field name="custom_weight"/>
+                </xpath>
+            </field>
+        </record> -->
+
+        <!-- product.product form view extension -->
+        <record id="view_product_form_inherit" model="ir.ui.view">
+            <field name="name">product.product.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='weight']" position="after">
+                    <field name="custom_weight"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- product.product tree view extension -->
+        <!-- <record id="view_product_tree_inherit" model="ir.ui.view">
+            <field name="name">product.product.tree.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='weight']" position="after">
+                    <field name="custom_weight"/>
+                </xpath>
+            </field>
+        </record> -->
+    </data>
+</odoo>
