@@ -49,6 +49,37 @@
             <xpath expr="//field[@name='picking_type_id']" position="attributes">
                 <attribute name="domain">deliver_to_domain</attribute>
             </xpath>
+
+            <xpath expr="//button[@name='action_create_invoice'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_create_invoice'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_tree_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.inherited</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="receipt_state" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_rfq_tree_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.inherited</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="receipt_state" />
+            </xpath>
         </field>
     </record>
 
@@ -62,6 +93,18 @@
                 <field name="no_surat_supplier" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"/>
             </xpath>
 
+        </field>
+    </record>
+
+    <record id="view_stock_picking_invoicing_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.invoicing.inherited</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_picking_invoicing.view_picking_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='set_to_be_invoiced']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
         </field>
     </record>
 
