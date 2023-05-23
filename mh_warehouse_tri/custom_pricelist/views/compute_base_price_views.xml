@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_customer_base_price_tree" model="ir.ui.view">
+        <field name="name">customer.base.price.tree</field>
+        <field name="model">customer.base.price</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Base Price">
+                <field name="customer_id"/>
+                <field name="type"/>
+                <field name="base_price"/>
+                <field name="inc_dec_price"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

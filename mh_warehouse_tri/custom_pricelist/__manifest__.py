@@ -15,7 +15,9 @@
         'views/custom_akses_views.xml',
         'views/menu_views.xml',
         'views/perubahan_pricelist_views.xml',
-        'views/weight_views.xml',
+        'views/sale_order_view.xml',
+        # 'views/sale_order_views.xml',
+        # 'views/compute_base_price_views.xml',
         
     ],
     'installable': True,
