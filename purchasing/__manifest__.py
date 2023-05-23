@@ -11,6 +11,7 @@
         'web_domain_field',
         'stock',
         'report_xlsx',
+        'stock_picking_invoicing',
     ],
     'data': [
         'security/ir.model.access.csv',
