@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_pricelist_item_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.pricelist.item.form.view.inherit</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='fixed_price']" position="after">
+                <field name="base_price_id"/>
+                <field name="price_change_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- <record id="product_base_price_customer_form_view" model="ir.ui.view">
+        <field name="name">product.base.price.customer.form.view</field>
+        <field name="model">product.base.price.customer</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="customer_id"/>
+                        <field name="type"/>
+                        <field name="base_price"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_price_change_type_form_view" model="ir.ui.view">
+        <field name="name">product.price.change.type.form.view</field>
+        <field name="model">product.price.change.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="type"/>
+                        <field name="price_change"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record> -->
+
+
+</odoo>

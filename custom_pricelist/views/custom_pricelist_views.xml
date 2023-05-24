@@ -1,0 +1,107 @@
+<odoo>
+    <data>
+
+        <!-- Tree view -->
+        <record id="custom_pricelist_tree" model="ir.ui.view">
+            <field name="name">custom.pricelist.tree</field>
+            <field name="model">product.pricelist</field>
+            <field name="arch" type="xml">
+                <tree string="Pricelists">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="exclude_tax"/>
+                    <field name="approval_status"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view -->
+        <record id="custom_pricelist_form" model="ir.ui.view">
+            <field name="name">custom.pricelist.form</field>
+            <field name="model">product.pricelist</field>
+            <field name="arch" type="xml">
+                <form string="Pricelist">
+                    <header>
+                    <button id="button_draft" name="action_draft" string="Set to Draft" class="btn-primary" type="object"/>
+                    <button id="button_waiting" name="action_waiting" string="Waiting Approve" class="btn-primary" type="object"/>
+                    <button id="button_waiting" name="action_approve" string="Approved" class="btn-primary" type="object"/>
+                    <button id="button_cancel" name="action_cancel" string="cancel" approval_status="draft,waiting,approved" type="object"/>
+                        <field name="approval_status" 
+                        widget="statusbar" 
+                        statusbar_visible="draft,waiting,approved"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="customer_id" widget="many2many_tags"/>
+                                <field name="name"/>
+                                <field name="exclude_tax"/>
+                                <!-- <field name="approval_status"/> -->
+                            </group>
+                            <group>
+                                <field name="start_date" 
+                                required='1'
+                                />
+                                <field name="end_date"/>
+                                <!-- <field name="base_price_id"/> -->
+                                <field name="compute_price_method" widget="radio" string="Compute Price Method"/>
+                                <button name="button_calculate_total_price" type="object" string="Calculate Total Price" class="btn-primary"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Pricelist Items">
+                                <field name="item_ids"/>
+                            </page>
+                            <page name="pricelist_config" string="Configuration">
+                                <group>
+                                    <group name="pricelist_availability" string="Availability">
+                                        <field name="country_group_ids" widget="many2many_tags"/>
+                                    </group>
+                                    <group name="pricelist_discounts" groups="product.group_discount_per_so_line" string="Discounts">
+                                        <field name="discount_policy" widget="radio"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Base Price" attrs="{'invisible': [('compute_price_method', '!=', 'base')]}">
+                                <field name="base_ids">
+                                    <tree>
+                                    <field name="customer_id"/>
+                                    <field name="type"/>
+                                        <!-- Define the columns of the base table -->
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Increase/Decrease base Price" attrs="{'invisible': [('compute_price_method', '!=', 'inc/dec')]}">
+                                <field name="inc_dec_ids">
+                                    <tree>
+                                        <field name="type"/>
+                                        <field name="price_difference"/>
+                                        <!-- Define the columns of the inc/dec table -->
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Pricelist History">
+                                <field name="history_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action to open pricelist -->
+        <record id="action_custom_pricelist" model="ir.actions.act_window">
+            <field name="name">Pricelists</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.pricelist</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="custom_pricelist_tree"/>
+        </record>
+
+        <!-- Menu item -->
+        <!-- <menuitem id="menu_custom_pricelist" name="Custom Pricelists" parent="sale.sale_order_menu" action="action_custom_pricelist"/> -->
+
+    </data>
+</odoo>
