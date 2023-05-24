@@ -23,9 +23,13 @@ class ProductPricelistItem(models.Model):
 
     @api.model
     def create(self, vals):
-        base_price = self.env['product.base.price.customer'].browse(vals['base_price_id'])
-        price_change = self.env['product.price.change.type'].browse(vals['price_change_id'])
-        vals['fixed_price'] = base_price.base_price + price_change.price_change
+        base_price_id = vals.get('base_price_id')
+        price_change_id = vals.get('price_change_id')
+
+        if base_price_id and price_change_id:
+            base_price = self.env['product.base.price.customer'].browse(base_price_id)
+            price_change = self.env['product.price.change.type'].browse(price_change_id)
+            vals['fixed_price'] = base_price.base_price + price_change.price_change
         return super().create(vals)
 
     def write(self, vals):
