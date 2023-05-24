@@ -47,12 +47,40 @@
                                 <field name="end_date"/>
                                 <!-- <field name="base_price_id"/> -->
                                 <field name="compute_price_method" widget="radio" string="Compute Price Method"/>
-                                <field name="calculated_price"/>
+                                <button name="button_calculate_total_price" type="object" string="Calculate Total Price" class="btn-primary"/>
                             </group>
                         </group>
                         <notebook>
                             <page string="Pricelist Items">
                                 <field name="item_ids"/>
+                            </page>
+                            <page name="pricelist_config" string="Configuration">
+                                <group>
+                                    <group name="pricelist_availability" string="Availability">
+                                        <field name="country_group_ids" widget="many2many_tags"/>
+                                    </group>
+                                    <group name="pricelist_discounts" groups="product.group_discount_per_so_line" string="Discounts">
+                                        <field name="discount_policy" widget="radio"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Base Price" attrs="{'invisible': [('compute_price_method', '!=', 'base')]}">
+                                <field name="base_ids">
+                                    <tree>
+                                    <field name="customer_id"/>
+                                    <field name="type"/>
+                                        <!-- Define the columns of the base table -->
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Increase/Decrease base Price" attrs="{'invisible': [('compute_price_method', '!=', 'inc/dec')]}">
+                                <field name="inc_dec_ids">
+                                    <tree>
+                                        <field name="type"/>
+                                        <field name="price_difference"/>
+                                        <!-- Define the columns of the inc/dec table -->
+                                    </tree>
+                                </field>
                             </page>
                             <page string="Pricelist History">
                                 <field name="history_ids"/>

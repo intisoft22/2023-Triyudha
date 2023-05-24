@@ -16,6 +16,7 @@
         'views/menu_views.xml',
         'views/perubahan_pricelist_views.xml',
         'views/sale_order_view.xml',
+        'views/security.xml',
         # 'views/sale_order_views.xml',
         # 'views/compute_base_price_views.xml',
         

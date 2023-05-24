@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_generate_multi_pricelist,acces.generate.multi.pricelist,model_generate_multi_pricelist,,1,1,1,1
+access_product_base,access.product.base,model_product_base,,1,1,1,1
+access_product_inc_dec,Product Increase/Decrease,model_product_inc_dec,base.group_user,1,1,1,1

@@ -7,6 +7,7 @@ class ProductPricelistItem(models.Model):
     product_type = fields.Selection([('201', '201'), ('304', '304')], string='Product Type')
     date_start = fields.Date(related='pricelist_id.start_date', string='Start Date')
     exclude_tax = fields.Boolean(string="Exclude Tax", default=True)
+    calculated_price = fields.Float(string="Calculated Price", compute="_compute_calculated_price")
     
     @api.onchange('product_weight', 'product_type')
     def _onchange_price(self):
@@ -23,3 +24,8 @@ class ProductPricelistItem(models.Model):
             if self.exclude_tax:
                 res[product.id][0] = res[product.id][0] * 1.11
         return res
+
+    @api.depends('product_id', 'product_id.weight', 'pricelist_id.base_price')
+    def _compute_calculated_price(self):
+        for item in self:
+            item.calculated_price = item.product_id.weight * item.pricelist_id.base_price
