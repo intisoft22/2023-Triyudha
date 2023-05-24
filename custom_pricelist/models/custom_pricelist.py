@@ -48,10 +48,11 @@ class CustomPricelist(models.Model):
 
         if self.customer_id:
             for item in self.item_ids:
-                if item.product_id == product_201:
+                if item.product_id == product_201 and hasattr(self.customer_id, 'price_201'):
                     item.fixed_price = self.customer_id.price_201
-                elif item.product_id == product_304:
+                elif item.product_id == product_304 and hasattr(self.customer_id, 'price_304'):
                     item.fixed_price = self.customer_id.price_304
+
 
     def action_approve(self):
         self.write({'approval_status': 'approved'})
