@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_stock_card_filter" model="ir.ui.view">
+            <field name="name">stock.card.select</field>
+            <field name="model">stock.card</field>
+            <field name="arch" type="xml">
+                <search string="Search Inventory Card">
+                    <field name="name"/>
+
+                </search>
+            </field>
+        </record>
+        <record id="view_stock_card_tree" model="ir.ui.view">
+            <field name="name">stock.card.tree</field>
+            <field name="model">stock.card</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Inventory Card">
+                    <field name="name" string="Name"/>
+                    <field name="warehouse_id"/>
+                    <field name="location_id"/>
+                    <field name="month"/>
+                    <field name="year"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_stock_card_form" model="ir.ui.view">
+            <field name="name">stock.card.form</field>
+            <field name="model">stock.card</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <form string="Inventory Card">
+
+                    <header>
+                        <button name="action_start" states="draft" type="object"
+                                string="Start" class="oe_highlight"/>
+                        <button name="action_confirm" class="oe_highlight"
+                                string="Confirm" type="object"
+                                attrs="{'invisible': [('state', 'not in', ['inprogress'])]}"/>
+                        <button name="action_cancel" states="draft,inprogress,done"
+                                type="object" string="Cancel"/>
+                        <button name="action_draft" states="cancel" type="object"
+                                string="Set to Draft"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,inprogress,done"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="warehouse_id"/>
+                            <field name="location_id"/>
+                            <field name="categ_id"  readonly="1" force_save="1"/>
+                            <field name="month"/>
+                            <field name="year"/>
+                            <field name="need_compute"/>
+                            <field name="last_compute"/>
+                        </group>
+                        <button name="compute_stock" states="inprogress" type="object"
+                                string="Compute"/>
+                        <notebook>
+                            <page name="product" string="Product">
+                                <field name="line_ids" readonly="1">
+                                    <tree string="Inventory Card">
+                                        <field name="product_id"/>
+                                        <field name="saldoawal"/>
+                                        <field name="masuk"/>
+                                        <field name="keluar"/>
+                                        <field name="saldoakhir"/>
+                                        <field name="state" invisible="1"/>
+
+                                        <button name="action_open" icon="fa-gear" type="object"
+                                        />
+                                    </tree>
+                                </field>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_stock_card" model="ir.actions.act_window">
+            <field name="name">Inventory Card</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.card</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_stock_card_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a Stock Card
+                </p>
+            </field>
+        </record>
+        <menuitem id="menu_stock_card"
+                  name="Inventory Card"
+                  parent="stock.menu_stock_inventory_control"
+                  action="action_stock_card"
+                  sequence="5"/>
+
+        <record id="view_stock_card_line_tree" model="ir.ui.view">
+            <field name="name">stock.card.line.tree</field>
+            <field name="model">stock.card.line</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Inventory Card">
+                    <field name="product_id"/>
+                    <field name="saldoawal"/>
+                    <field name="masuk"/>
+                    <field name="keluar"/>
+                    <field name="saldoakhir"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_stock_card_line_form" model="ir.ui.view">
+            <field name="name">stock.card.line.form</field>
+            <field name="model">stock.card.line</field>
+            <field name="priority" eval="1"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <form string="Inventory Card">
+
+
+                    <sheet>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="saldoawal"/>
+                            <field name="masuk"/>
+                            <field name="keluar"/>
+                            <field name="saldoakhir"/>
+                            <field name="state" invisible="1"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_stock_card_line_form_detail" model="ir.ui.view">
+            <field name="name">stock.card.line.form</field>
+            <field name="model">stock.card.line</field>
+            <field name="priority" eval="3"/>
+            <field name="arch" type="xml">
+                <form string="Inventory Card" edit="false" create="false">
+
+
+                    <sheet>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="state" invisible="1"/>
+                        </group>
+                        <field name="line_ids" nolabel="1">
+                            <tree string="Inventory Card">
+                                <field name="date"/>
+                                <field name="picking_id"/>
+                                <field name="origin"/>
+                                <field name="type"/>
+                                <field name="masuk" sum="Total Masuk"/>
+                                <field name="cwmasuk" sum="Total Masuk"/>
+                                <field name="keluar" sum='Total Keluar'/>
+                                <field name="cwkeluar" sum='Total Keluar'/>
+                                <field name="saldoakhir"/>
+                                <field name="cwsaldoakhir"/>
+                            </tree>
+                        </field>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+

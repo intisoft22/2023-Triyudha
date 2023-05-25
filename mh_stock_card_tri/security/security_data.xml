@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="group_stock_card" model="res.groups">
+        <field name="name">Stock Card</field>
+        <field name="category_id" ref="mh_warehouse_tri.module_category_warehouse"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_register_pembelian_wizard,access.register.pembelian.wizard,model_register_pembelian_wizard,,1,1,1,1
+access_kartu_hutang_wizard,access.kartu.hutang.wizard,model_kartu_hutang_wizard,,1,1,1,1

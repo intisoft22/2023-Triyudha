@@ -11,6 +11,15 @@
                 <field name="product_category"/>
             </xpath>
 
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="up_contact_domain" invisible="1"/>
+                <field name="up_contact"/>
+            </xpath>
+
+            <xpath expr="//field[@name='up_contact']" position="attributes">
+                <attribute name="domain">up_contact_domain</attribute>
+            </xpath>
+
             <xpath expr="//field[@name='fiscal_position_id']" position="after">
                 <field name="shipment_term"/>
                 <field name="others"/>
@@ -26,6 +35,10 @@
                 <field name="product_category" invisible="1"/>
             </xpath>
 
+            <xpath expr="//tree/field[@name='price_subtotal']" position="after">
+                <field name="note" />
+            </xpath>
+
             <xpath expr="//field[@name='order_line']" position="attributes">
                 <attribute name="context">{
                     'default_product_category': product_category,
@@ -35,6 +48,37 @@
 
             <xpath expr="//field[@name='picking_type_id']" position="attributes">
                 <attribute name="domain">deliver_to_domain</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_create_invoice'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_create_invoice'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_tree_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.inherited</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="receipt_state" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_rfq_tree_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.inherited</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field name="receipt_state" />
             </xpath>
         </field>
     </record>
@@ -52,6 +96,18 @@
         </field>
     </record>
 
+    <record id="view_stock_picking_invoicing_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.invoicing.inherited</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_picking_invoicing.view_picking_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='set_to_be_invoiced']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
     <record id="view_stock_picking_type_form_inherit" model="ir.ui.view">
         <field name="name">stock.picking.type.inherited</field>
         <field name="model">stock.picking.type</field>
@@ -64,4 +120,54 @@
 
         </field>
     </record>
+
+    <record id="view_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.inherited</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='website']" position="before">
+                <field name="no_fax"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_company_form_inherit" model="ir.ui.view">
+        <field name="name">res.company.inherited</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='favicon']" position="after">
+                <field name="no_fax"/>
+                <field name="desc"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_reporting"
+              name="Reporting"
+              groups="purchase.group_purchase_manager"
+              action="purchase.action_purchase_order_report_all"
+              parent="purchase.purchase_report"
+              sequence="10"/>
+
+    <menuitem id="menu_register_pembelian"
+              name="Register Pembelian"
+              action="action_register_pembelian"
+              parent="purchase.purchase_report"
+              sequence="20"/>
+
+    <menuitem id="menu_kartu_hutang"
+              name="Kartu Hutang"
+              action="action_kartu_hutang"
+              parent="purchase.purchase_report"
+              sequence="30"/>
+
+    <menuitem id="menu_kartu_hutang_accounting"
+              name="Kartu Hutang"
+              action="action_kartu_hutang"
+              parent="account.menu_finance_reports"
+              sequence="100"/>
 </odoo>

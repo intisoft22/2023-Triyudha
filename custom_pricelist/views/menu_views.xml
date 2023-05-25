@@ -90,6 +90,7 @@
       <field name="res_model">product.pricelist</field>
       <field name="view_mode">tree,form</field>
       <field name="view_id" ref="generate_multi_pricelist_view_form"/>
+<!--       <field name="view_id" ref="custom_pricelist.action_generate_multi_pricelist"/> -->
     </record>
     <!-- Menu action -->
     <!-- <menuitem id="menu_action_generate_multi_pricelist" name="Generate Multi Pricelist" parent="sale.product_menu_catalog" sequence="10"/> -->

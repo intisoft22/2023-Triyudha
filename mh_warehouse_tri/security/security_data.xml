@@ -1,91 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="group_sale_only_view" model="res.groups">
-        <field name="name">User: View Only</field>
-        <field name="category_id" ref="base.module_category_sales_management"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-        <field name="comment">the user will have access to his own data in the sales application.</field>
-    </record>
 
-    <record id="sales_team.group_sale_salesman" model="res.groups">
-        <field name="name">User: Own Documents Only</field>
-        <field name="category_id" ref="base.module_category_sales_management"/>
-        <field name="implied_ids" eval="[(4, ref('in_sales.group_sale_only_view'))]"/>
-        <field name="comment">the user will have access to his own data in the sales application.</field>
-    </record>
-
-    <record model="ir.module.category" id="module_category_sales">
-        <field name="name">Sales Settings</field>
-        <field name="sequence">3</field>
+    <record model="ir.module.category" id="module_category_warehouse">
+        <field name="name">Warehouse Settings</field>
+        <field name="sequence">4</field>
         <field name="visible" eval="1"/>
     </record>
 
-    <record id="group_discount_sales" model="res.groups">
-        <field name="name">Manage Discount</field>
-        <field name="category_id" ref="in_sales.module_category_sales"/>
+    <record id="group_confirm_sr" model="res.groups">
+        <field name="name">Confirm Stock Request</field>
+        <field name="category_id" ref="mh_warehouse_tri.module_category_warehouse"/>
     </record>
 
-    <record id="group_creditlimit_sales" model="res.groups">
-        <field name="name">Manage Credit Limit</field>
-        <field name="category_id" ref="in_sales.module_category_sales"/>
+
+    <record id="group_report_wh" model="res.groups">
+        <field name="name">View Report Warehouse</field>
+        <field name="category_id" ref="mh_warehouse_tri.module_category_warehouse"/>
     </record>
 
-    <record id="group_report_sales" model="res.groups">
-        <field name="name">View Report Sales</field>
-        <field name="category_id" ref="in_sales.module_category_sales"/>
-    </record>
-
-    <record model="res.groups" id="group_confirm_so">
-        <field name="name">Confirm Sale Order</field>
-        <field name="category_id" ref="in_sales.module_category_sales"/>
-    </record>
-
-    <record model="ir.module.category" id="module_category_picking">
-        <field name="name">Picking Settings</field>
-        <field name="sequence">3</field>
-        <field name="visible" eval="1"/>
-    </record>
-
-    <record model="res.groups" id="group_validate_picking">
-        <field name="name">Validate Picking</field>
-        <field name="category_id" ref="in_sales.module_category_picking"/>
-    </record>
-
-<!--    <record model="res.groups" id="group_cancel_picking">-->
-<!--        <field name="name">Cancel Picking</field>-->
-<!--        <field name="category_id" ref="in_sales.module_category_picking"/>-->
-<!--    </record>-->
-
-    <record id="dev_picking_cancel.picking_cancel_button" model="res.groups">
-        <field name="name">Cancel Picking.</field>
-        <field name="category_id" ref="in_sales.module_category_picking"/>
-    </record>
-    <record model="res.groups" id="group_cancel_return">
-        <field name="name">Return Picking</field>
-        <field name="category_id" ref="in_sales.module_category_picking"/>
-    </record>
-
-    <record model="ir.module.category" id="module_category_accounting">
-        <field name="name">Accounting Settings</field>
-        <field name="sequence">3</field>
-        <field name="visible" eval="1"/>
-    </record>
-    <record model="res.groups" id="group_validate_invoice">
-        <field name="name">Validate Invoice</field>
-        <field name="category_id" ref="in_sales.module_category_accounting"/>
-    </record>
-
-    <record model="res.groups" id="group_cancel_invoice">
-        <field name="name">Cancel Invoice</field>
-        <field name="category_id" ref="in_sales.module_category_accounting"/>
-    </record>
-
-    <record model="res.groups" id="group_payment_matching">
-        <field name="name">Payment Matching</field>
-        <field name="category_id" ref="in_sales.module_category_accounting"/>
-    </record>
-    <record model="res.groups" id="group_overview_user">
-        <field name="name">Accounting Overview</field>
-        <field name="category_id" ref="in_sales.module_category_accounting"/>
-    </record>
 </odoo>

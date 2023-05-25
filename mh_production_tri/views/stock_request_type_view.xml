@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_stock_request_type_form" model="ir.ui.view">
+            <field name="name">stock.request.type.form</field>
+            <field name="model">stock.request.type</field>
+            <field name="inherit_id" ref="mh_warehouse_tri.view_stock_request_type_form"/>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="delivery_prod"/>
+                </field>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

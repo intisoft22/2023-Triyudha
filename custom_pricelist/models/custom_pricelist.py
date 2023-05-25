@@ -189,3 +189,4 @@ class ProductIncDec(models.Model):
     # lebar = fields.Float('Lebar (mm)')
     # tebal = fields.Float('Tebal (mm)')
     # Definisikan field lainnya yang ingin Anda tampilkan di tabel inc/dec
+
