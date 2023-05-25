@@ -26,8 +26,8 @@
                     <div attrs="{'invisible': [('bentuk', '!=', 'kotak')]}">
                         <field name="lebar" class="oe_inline" style="vertical-align:baseline"/> mm
                     </div>
-                    <label for="tebal" attrs="{'invisible': [('bentuk', '!=', 'kotak')]}"/>
-                    <div attrs="{'invisible': [('bentuk', '!=', 'kotak')]}">
+                    <label for="tebal" />
+                    <div >
                         <field name="tebal" class="oe_inline" style="vertical-align:baseline"/> mm
                     </div>
                     <field name="khl"/>

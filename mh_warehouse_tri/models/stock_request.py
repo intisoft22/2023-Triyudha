@@ -51,7 +51,30 @@ class StockRequest(models.Model):
     ], string='Category')
 
     note = fields.Text('Note')
-
+    qty_in_progress = fields.Float(
+        "Qty In Progress",
+        digits="Product Unit of Measure",
+        readonly=True,
+        compute="_compute_qty_picking",
+        store=True,
+        help="Quantity in progress.",
+    )
+    qty_done = fields.Float(
+        "Qty Done",
+        digits="Product Unit of Measure",
+        readonly=True,
+        compute="_compute_qty_picking",
+        store=True,
+        help="Quantity completed",
+    )
+    qty_cancelled = fields.Float(
+        "Qty Cancelled",
+        digits="Product Unit of Measure",
+        readonly=True,
+        compute="_compute_qty_picking",
+        store=True,
+        help="Quantity cancelled",
+    )
     @api.depends('categ_id')
     def _compute_product_id_domain(self):
         for rec in self:
@@ -74,6 +97,45 @@ class StockRequest(models.Model):
                 rec.product_id_domain = json.dumps(
                     [('id', '=', 0)]
                 )
+
+    @api.depends(
+        "picking_ids.state",
+    )
+    def _compute_qty_picking(self):
+        for request in self:
+            inprogress = 0.0
+            other_qty = 0.0
+            done_qty = 0.0
+            # print(request.order_id)
+            # print(request.order_id.picking_ids)
+            picking_ids = self.env['stock.picking'].search([
+                ('group_id', '=', request.order_id.procurement_group_id.id)])
+            for picking in picking_ids:
+                for move in picking.move_ids_without_package:
+                    if move.product_id.id == request.product_id.id:
+                        if picking.state == 'done':
+                            if move.move_orig_ids:
+                                done_qty += move.quantity_done
+                                inprogress -= move.quantity_done
+                            if move.move_dest_ids:
+                                inprogress += move.quantity_done
+                        if picking.state =='cancel':
+
+                            if move.move_orig_ids:
+                                other_qty += move.product_uom_qty
+            uom = request.product_id.uom_id
+            # print(request.id)
+            # print(other_qty)
+            # print(inprogress)
+            # print(done_qty)
+            # print("=========")
+            request.qty_done = uom._compute_quantity(done_qty, request.product_uom_id)
+            request.qty_in_progress = uom._compute_quantity(
+                inprogress, request.product_uom_id
+            )
+            request.qty_cancelled = uom._compute_quantity(
+                other_qty, request.product_uom_id
+            )
 
     def _action_launch_procurement_rule(self):
         """
@@ -320,7 +382,7 @@ class StockRequestOrder(models.Model):
     def _compute_picking_ids(self):
         for record in self:
             if record.procurement_group_id:
-                if record.state in ['open','done']:
+                if record.state != 'draft':
                     picking = self.env['stock.picking'].search([
                         ('group_id', '=', record.procurement_group_id.id)])
                     picking_array = []
