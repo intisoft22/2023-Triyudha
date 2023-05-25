@@ -1,20 +1,10 @@
 <odoo>
-    <!-- Menu item -->
-    <!-- <menuitem id="menu_generate_multi_pricelist" name="Generate Multi Pricelist" parent="sale.product_menu_catalog" sequence="10"/> -->
-    <!-- Action -->
-    <!-- <record id="action_generate_multi_pricelist" model="ir.actions.act_window">
-        <field name="name">Generate Multi Pricelist</field>
-        <field name="res_model">product.pricelist</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-    </record> -->
 
-   
     <record id="generate_multi_pricelist_view_form" model="ir.ui.view">
       <field name="name">generate.multi.pricelist.view.form</field>
       <field name="model">product.pricelist</field>
       <field name="arch" type="xml">
-        <form string="Pricelist">
+        <form string="Generate Multi Pricelist">
           <header>
             <button id="button_draft" name="action_draft" string="Set to Draft" class="btn-primary" type="object"/>
             <button id="button_waiting" name="action_waiting" string="Waiting Approve" class="btn-primary" type="object"/>
@@ -27,26 +17,54 @@
           <sheet>
             <group>
               <group>
-                <field name="customer_id" widget="many2many_tags"/>
                 <field name="name"/>
-                <!-- <field name="include_tax"/> -->
-                <!-- <field name="approval_status"/> -->
+                <field name="customer_id"/>
+                <field name="compute_price_method_multi_pricelist" widget="radio" string="Compute Price Method "/>
+                <field name="exclude_tax"/>
               </group>
               <group>
-                <!-- <field name="start_date" 
+                <field name="start_date" 
                                 required='1'
-                                /> -->
+                                />
                 <field name="end_date"/>
-                <field name="compute_price_method" widget="radio" string="Compute "/>
+                <button name="button_calculate_total_price" type="object" string="Calculate Total Price" class="btn-primary"/>
               </group>
             </group>
             <notebook>
+              <page string="Base Price" attrs="{'invisible': [('compute_price_method_multi_pricelist', '!=', 'base')]}">
+                <field name="base_ids">
+                  <tree>
+                    <field name="customer_id"/>
+                    <field name="type_spec"/>
+                    <field name="bentuk" string="O/▢"/>
+                    <!-- Define the columns of the base table -->
+                  </tree>
+                </field>
+              </page>
+              <page string="Increase/Decrease base Price" attrs="{'invisible': [('compute_price_method_multi_pricelist', '!=', 'inc/dec')]}">
+                <field name="inc_dec_ids">
+                  <tree>
+                    <field name="type_spec"/>
+                    <field name="price_difference"/>
+                    <field name="bentuk" string="O/▢"/>
+                    <!-- Define the columns of the inc/dec table -->
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+            <notebook>
               <page string="Pricelist Items">
                 <field name="item_ids"/>
+                  <!-- <tree>
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                  </tree> -->
               </page>
-              <page string="Pricelist History">
+              <!-- <page string="Pricelist History">
                 <field name="history_ids"/>
-              </page>
+              </page> -->
             </notebook>
           </sheet>
         </form>
@@ -71,7 +89,7 @@
       <field name="type">ir.actions.act_window</field>
       <field name="res_model">product.pricelist</field>
       <field name="view_mode">tree,form</field>
-      <field name="view_id" ref="custom_pricelist.action_generate_multi_pricelist"/>
+      <field name="view_id" ref="generate_multi_pricelist_view_form"/>
     </record>
     <!-- Menu action -->
     <!-- <menuitem id="menu_action_generate_multi_pricelist" name="Generate Multi Pricelist" parent="sale.product_menu_catalog" sequence="10"/> -->
