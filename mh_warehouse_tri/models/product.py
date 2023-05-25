@@ -7,6 +7,12 @@ class ProductMotif(models.Model):
 
     name =  fields.Char('Name')
 
+class ProductTebal(models.Model):
+    _name = "product.tebal"
+    _description ="Product Tebal"
+
+    name =  fields.Float('Name')
+
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
@@ -16,6 +22,6 @@ class ProductTemplate(models.Model):
     dia_inc = fields.Float('Diameter (inc)')
     panjang = fields.Float('Panjang (mm)')
     lebar = fields.Float('Lebar (mm)')
-    tebal = fields.Float('Tebal (mm)')
     khl = fields.Selection([('K', 'K'), ('HL', 'HL'), ], string='K/HL', )
     motif = fields.Many2one('product.motif','Motif')
+    tebal = fields.Many2one('product.tebal','Tebal')

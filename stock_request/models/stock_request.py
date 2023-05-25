@@ -144,9 +144,7 @@ class StockRequest(models.Model):
         for request in self:
             request.picking_count = 0
             request.picking_ids = self.env["stock.picking"]
-            request.picking_ids = request.move_ids.filtered(
-                lambda m: m.state != "cancel"
-            ).mapped("picking_id")
+            request.picking_ids = request.move_ids.mapped("picking_id")
             request.picking_count = len(request.picking_ids)
 
     @api.depends(
