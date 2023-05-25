@@ -4,14 +4,14 @@ class ProductBasePriceCustomer(models.Model):
     _name = 'product.base.price.customer'
     
     customer_id = fields.Many2one('res.partner', string='Customer')
-    type = fields.Selection(selection=lambda r: [(201, '201'), (304, '304')], string='Type')
+    type_spec = fields.Selection([('201', '201'), ('304', '304'), ], string='Type', )
     base_price = fields.Float('Base Price')
 
 
 class ProductPriceChangeType(models.Model):
     _name = 'product.price.change.type'
     
-    type = fields.Selection(selection=lambda r: [(201, '201'), (304, '304')], string='Type')
+    type_spec = fields.Selection([('201', '201'), ('304', '304'), ], string='Type', )
     price_change = fields.Float('Price Change')
 
 

@@ -4,7 +4,7 @@ class ProductPricelistItem(models.Model):
     _inherit = 'product.pricelist.item'
 
     product_weight = fields.Float('Product Weight')
-    product_type = fields.Selection([('201', '201'), ('304', '304')], string='Product Type')
+    type_spec = fields.Selection([('201', '201'), ('304', '304'), ], string='Type', )
     date_start = fields.Date(related='pricelist_id.start_date', string='Start Date')
     exclude_tax = fields.Boolean(string="Exclude Tax", default=True)
     calculated_price = fields.Float(string="Calculated Price", compute="_compute_calculated_price")

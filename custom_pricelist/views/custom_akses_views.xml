@@ -15,11 +15,19 @@
             <field name="name">custom.pricelist.history</field>
             <field name="model">custom.pricelist.history</field>
         </record>
+      
+        <!-- <record id="product_price_change_type_form_view" model="ir.ui.view">
+            <field name="name">product.price.change.type.form.view</field>
+            <field name="model">product.price.change.type</field>
+        </record> -->
+        <!-- <record id="custom_pricelist_history_access" model="ir.model.access">
+
 <!--         <record id="product_price_change_type_form_view" model="ir.ui.view">
             <field name="name">product.price.change.type.form.view</field>
             <field name="model">product.price.change.type</field>
         </record> -->
 <!--         <record id="custom_pricelist_history_access" model="ir.model.access">
+
             <field name="name">custom.pricelist.history.access</field>
             <field name="model_id" ref="product.model_base_price_customer"/>
             <field name="group_id" ref="base.group_user"/>
