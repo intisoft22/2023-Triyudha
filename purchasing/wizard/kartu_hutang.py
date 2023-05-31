@@ -104,9 +104,12 @@ class KartuHutangWizard(models.TransientModel):
                     stock_picking = fal.move_id.picking_ids
                     if stock_picking:
                         for s in stock_picking:
-                            no_sj = s.name + (" (") + s.no_surat_supplier + ")"
+                            if s.no_surat_supplier:
+                                no_sj = s.name + (" (") + s.no_surat_supplier + ")"
+                            else:
+                                no_sj = s.name + (" () ")
                     else:
-                        no_sj = '-'
+                        no_sj = ' '
 
                     new_val = {'tgl_nota': tgl_nota,
                                'tgl_tempo': tgl_tempo,

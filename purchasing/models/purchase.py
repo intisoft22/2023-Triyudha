@@ -4,18 +4,20 @@ import json
 
 
 from odoo import api, fields, models
+from odoo.tools.float_utils import float_is_zero
 
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-    up_contact = fields.Many2one('res.partner',  readonly=False, string="Up Contact")
+    up_contact = fields.Many2one('res.partner', readonly=False, string="Up Contact")
     up_contact_domain = fields.Char(
         compute="_compute_up_contact_domain",
         readonly=True,
         store=False,
     )
 
-    product_category = fields.Many2one('product.category', string="Product Category", domain=[('parent_id', '=', False)], required=True)
+    product_category = fields.Many2one('product.category', string="Product Category",
+                                       domain=[('parent_id', '=', False)], required=True)
     shipment_term = fields.Char(string='Shipment Term')
     others = fields.Char(string='Others')
     deliver_to_domain = fields.Char(
@@ -37,6 +39,13 @@ class PurchaseOrder(models.Model):
         ('full', 'Fully Receive'),
     ], string='Receipt Status', compute='_get_receipt_status', store=True, readonly=True, copy=False, default='no')
 
+    invoice_status = fields.Selection([
+        ('no', 'Nothing to Bill'),
+        ('to invoice', 'Waiting Bills'),
+        ('invoiced', 'Fully Billed'),
+        ('partial', 'Partially Bills'),
+    ], string='Billing Status', compute='_get_invoiced', store=True, readonly=True, copy=False, default='no')
+
     @api.onchange('product_category')
     def _onchange_product_category(self):
         for rec in self:
@@ -53,7 +62,7 @@ class PurchaseOrder(models.Model):
                     '|',
                     ('warehouse_id', '=', False),
                     ('warehouse_id.company_id', '=', rec.company_id.id),
-                    ])
+                ])
             else:
                 rec.deliver_to_domain = json.dumps([
                     ('code', '=', 'incoming'),
@@ -61,7 +70,7 @@ class PurchaseOrder(models.Model):
                     '|',
                     ('warehouse_id', '=', False),
                     ('warehouse_id.company_id', '=', rec.company_id.id),
-                    ])
+                ])
 
     @api.onchange('partner_id')
     def _compute_up_contact_domain(self):
@@ -103,12 +112,48 @@ class PurchaseOrder(models.Model):
                 elif qty_receive >= quantity:
                     order.receipt_state = 'full'
 
+    @api.depends('state', 'order_line.qty_to_invoice', 'order_line.qty_invoiced')
+    def _get_invoiced(self):
+        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        for order in self:
+            if order.state not in ('purchase', 'done'):
+                order.invoice_status = 'no'
+                continue
+
+            if any(
+                    not float_is_zero(line.qty_to_invoice, precision_digits=precision)
+                    for line in order.order_line.filtered(lambda l: not l.display_type)
+            ):
+                qty_invoiced = 0
+                qty_received = 0
+                for ln in order.order_line:
+                    qty_invoiced += ln.qty_invoiced
+                    qty_received += ln.qty_received
+
+                if qty_invoiced == 0:
+                    order.invoice_status = 'to invoice'
+                elif qty_invoiced < qty_received:
+                    order.invoice_status = 'partial'
+                else:
+                    order.invoice_status = 'to invoice'
+
+            elif (
+                    all(
+                        float_is_zero(line.qty_to_invoice, precision_digits=precision)
+                        for line in order.order_line.filtered(lambda l: not l.display_type)
+                    )
+                    and order.invoice_ids
+            ):
+                order.invoice_status = 'invoiced'
+            else:
+                order.invoice_status = 'no'
 
 
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
-    product_category = fields.Many2one('product.category', string="Product Category", domain=[('parent_id', '=', False)])
+    product_category = fields.Many2one('product.category', string="Product Category",
+                                       domain=[('parent_id', '=', False)])
     note = fields.Char(string='Note')
 
     product_id_domain = fields.Char(
@@ -127,7 +172,7 @@ class PurchaseOrderLine(models.Model):
                     '|',
                     ('company_id', '=', False),
                     ('company_id', '=', rec.company_id.id),
-                    ])
+                ])
             else:
                 rec.product_id_domain = json.dumps([
                     ('purchase_ok', '=', True),
@@ -155,17 +200,18 @@ class StockPicking(models.Model):
         return res
 
 
-
 class PickingType(models.Model):
     _inherit = 'stock.picking.type'
 
-    product_category = fields.Many2one('product.category', string="Product Category", domain=[('parent_id', '=', False)])
+    product_category = fields.Many2one('product.category', string="Product Category",
+                                       domain=[('parent_id', '=', False)])
 
-    
+
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     no_fax = fields.Char(string='No. Fax')
+
 
 class ResCompany(models.Model):
     _inherit = 'res.company'
@@ -173,8 +219,10 @@ class ResCompany(models.Model):
     no_fax = fields.Char(string='Fax')
     desc = fields.Text(string='Description')
 
+
 class StockInvoiceOnshipping(models.TransientModel):
     _inherit = 'stock.invoice.onshipping'
+
     def _get_invoice_line_values(self, moves, invoice_values, invoice):
         """
         Create invoice line values from given moves
@@ -218,7 +266,8 @@ class StockInvoiceOnshipping(models.TransientModel):
             quantity += qty
             move_line_ids.append((4, move.id, False))
         taxes = moves._get_taxes(fiscal_position, inv_type)
-        price = moves._get_price_unit_invoice(inv_type, partner_id, quantity)
+        # price = moves._get_price_unit_invoice(inv_type, partner_id, quantity)
+        price = move.purchase_line_id.price_unit  # change price_unit from product price to po price
         line_obj = self.env["account.move.line"]
         values = line_obj.default_get(line_obj.fields_get().keys())
         values.update(
@@ -232,11 +281,9 @@ class StockInvoiceOnshipping(models.TransientModel):
                 "tax_ids": [(6, 0, taxes.ids)],
                 "move_line_ids": move_line_ids,
                 "move_id": invoice.id,
-                "purchase_line_id": move.purchase_line_id.id, #only modify this line to save purchase_line_id - mifta
+                "purchase_line_id": move.purchase_line_id.id,  # only modify this line to save purchase_line_id - mifta
             }
         )
         values = self._simulate_invoice_line_onchange(values, price_unit=price)
         values.update({"name": name})
         return values
-
-
