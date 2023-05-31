@@ -46,7 +46,7 @@
                                 />
                                 <field name="end_date"/>
                                 <!-- <field name="base_price_id"/> -->
-                                <field name="compute_price_method" widget="radio" string="Compute Price Method"/>
+                                <field name="compute_price_method_pricelist" widget="radio" string="Computed Price Method"/>
                                 <button name="button_calculate_total_price" type="object" string="Calculate Total Price" class="btn-primary"/>
                             </group>
                         </group>
@@ -64,20 +64,22 @@
                                     </group>
                                 </group>
                             </page>
-                            <page string="Base Price" attrs="{'invisible': [('compute_price_method', '!=', 'base')]}">
+                            <page string="Base Price" attrs="{'invisible': [('compute_price_method_pricelist', '!=', 'base')]}">
                                 <field name="base_ids">
                                     <tree>
                                     <field name="customer_id"/>
-                                    <field name="type"/>
+                                    <field name="type_spec"/>
+                                        <field name="bentuk" string="O/▢"/>
                                         <!-- Define the columns of the base table -->
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Increase/Decrease base Price" attrs="{'invisible': [('compute_price_method', '!=', 'inc/dec')]}">
+                            <page string="Increase/Decrease base Price" attrs="{'invisible': [('compute_price_method_pricelist', '!=', 'inc/dec')]}">
                                 <field name="inc_dec_ids">
                                     <tree>
-                                        <field name="type"/>
+                                        <field name="type_spec"/>
                                         <field name="price_difference"/>
+                                        <field name="bentuk" string="O/▢"/>
                                         <!-- Define the columns of the inc/dec table -->
                                     </tree>
                                 </field>

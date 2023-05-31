@@ -1,7 +1,7 @@
 
 {
-    "name": "Warehouse for Triyudha",
-    "summary": "Warehouse for Triyudha",
+    "name": "Warehouse for Triyuda",
+    "summary": "Warehouse for Triyuda",
     "version": "14.0",
     "author": "Meyrina Herawati",
     "category": "Warehouse Management",
@@ -12,6 +12,7 @@
         "security/security_data.xml",
         "views/product_view.xml",
         "views/product_motif_view.xml",
+        "views/product_tebal_view.xml",
         "views/stock_request_type_view.xml",
         "views/stock_request_view.xml",
         "views/warehouse_view.xml",

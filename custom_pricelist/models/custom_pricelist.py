@@ -4,7 +4,8 @@ from datetime import timedelta
 class CustomPricelist(models.Model):
     _inherit = 'product.pricelist'
 
-    customer_id = fields.Many2many('res.partner', string='Customer', domain="[('customer_rank', '>', 0)]")
+    customer_multi_id = fields.Many2many('res.partner', string='Customer', domain="[('customer_rank', '>', 0)]")
+    customer_id = fields.Many2one('res.partner', string='Customer', domain="[('customer_rank', '>', 0)]")
     start_date = fields.Date(string='Start Date')
     end_date = fields.Date(string='End Date', readonly=True)
     exclude_tax = fields.Boolean(string='Exclude Tax', default=True)
@@ -22,7 +23,11 @@ class CustomPricelist(models.Model):
         ('cancel', 'Cancelled')
     ], string='Approval Status', readonly=True, copy=False, index=True, tracking=3, default='draft')
     history_ids = fields.One2many('custom.pricelist.history', 'pricelist_id', string='Pricelist History')
-    compute_price_method = fields.Selection([
+    compute_price_method_pricelist = fields.Selection([
+        ('base', 'Update Base price By Customer'),
+        ('inc/dec', 'Increase/Decrease Base Price By Type')
+    ], string='Compute Price Method')
+    compute_price_method_multi_pricelist = fields.Selection([
         ('base', 'Update Base price By Customer'),
         ('inc/dec', 'Increase/Decrease Base Price By Type')
     ], string='Compute Price Method')
@@ -160,7 +165,13 @@ class ProductBase(models.Model):
 
     pricelist_id = fields.Many2one('product.pricelist', string="Pricelist")
     customer_id = fields.Many2many('res.partner', string='Customer', domain="[('customer_rank', '>', 0)]")
-    type = fields.Selection(selection=lambda r: [(201, '201'), (304, '304')], string='Type')
+    type_spec = fields.Selection([('201', '201'), ('304', '304'), ], string='Type', )
+    bentuk = fields.Selection([('bulat', 'Bulat'), ('kotak', 'Kotak'), ], string='Bentuk', )
+    # dia = fields.Float('Diameter (mm)')
+    # dia_inc = fields.Float('Diameter (inc)')
+    # panjang = fields.Float('Panjang (mm)')
+    # lebar = fields.Float('Lebar (mm)')
+    # tebal = fields.Float('Tebal (mm)')
     # Definisikan field lainnya yang ingin Anda tampilkan di tabel base
 
 class ProductIncDec(models.Model):
@@ -169,6 +180,13 @@ class ProductIncDec(models.Model):
 
     pricelist_id = fields.Many2one('product.pricelist', string="Pricelist")
     customer_id = fields.Many2many('res.partner', string='Customer', domain="[('customer_rank', '>', 0)]")
-    type = fields.Selection(selection=lambda r: [(201, '201'), (304, '304')], string='Type')
+    type_spec = fields.Selection([('201', '201'), ('304', '304')], string='Type')
     price_difference = fields.Float(string="Price Difference")
+    bentuk = fields.Selection([('bulat', 'Bulat'), ('kotak', 'Kotak'), ], string='Bentuk', )
+    # dia = fields.Float('Diameter (mm)')
+    # dia_inc = fields.Float('Diameter (inc)')
+    # panjang = fields.Float('Panjang (mm)')
+    # lebar = fields.Float('Lebar (mm)')
+    # tebal = fields.Float('Tebal (mm)')
     # Definisikan field lainnya yang ingin Anda tampilkan di tabel inc/dec
+

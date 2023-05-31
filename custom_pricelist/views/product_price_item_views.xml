@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='pricelist_id']" position="before">
                 <field name="product_weight"/>
-                <field name="product_type"/>
+                <field name="type_spec"/>
             </xpath>
             <xpath expr="//field[@name='applied_on']" position="after">
                 <field name="exclude_tax"/>
