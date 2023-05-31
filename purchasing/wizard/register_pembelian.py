@@ -115,7 +115,7 @@ class RegisterPembelianWizard(models.TransientModel):
                             'nama_barang': fa_ln.name,
                             'quantity': fa_ln.quantity,
                             'price_unit': fa_ln.price_unit,
-                            'coa': fa_ln.account_id.name,
+                            'coa': fa_ln.account_id.code,
                             'dpp': dpp,
                             'ppn': ppn,
                             'pph23': abs(pph23),
