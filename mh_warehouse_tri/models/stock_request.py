@@ -116,7 +116,7 @@ class StockRequest(models.Model):
                         if picking.state == 'done':
                             if move.move_orig_ids:
                                 done_qty += move.quantity_done
-                                inprogress -= move.quantity_done
+                                # inprogress -= move.quantity_done
                             if move.move_dest_ids:
                                 inprogress += move.quantity_done
                         if picking.state =='cancel':
