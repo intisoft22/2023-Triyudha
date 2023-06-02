@@ -68,35 +68,36 @@ class RegisterPembelianWizard(models.TransientModel):
                 for fa_ln in fa.invoice_line_ids:
                     total_quantity += fa_ln.quantity
 
-                    tax_name = []
-                    tax_amount = []
+                    tax_id = []
                     for it in fa_ln.tax_ids:
-                        tax_name.append(it.name)
-                        tax_val = {
-                            it.name : it.amount
-                        }
-                        tax_amount.append(tax_val)
+                        tax_id.append(it.id)
 
                     price_subtotal = fa_ln.price_unit * fa_ln.quantity
-                    if 'PPN (INCL)' in tax_name:
-                        dpp = (100/111) * price_subtotal
-                        ppn = (11/111) * price_subtotal
-                    elif 'PPN (EXCL)' in tax_name:
-                        dpp = price_subtotal
-                        ppn = (11 / 100) * price_subtotal
+
+                    tax_ppn = self.env['account.tax'].search([('id', 'in', tax_id), ('name', '=ilike', '%ppn%')])
+                    if tax_ppn:
+                        for tppn in tax_ppn:
+                            if tppn.price_include:
+                                dpp = (100 / 111) * price_subtotal
+                                ppn = (tppn.amount / 111) * price_subtotal
+                            else:
+                                dpp = price_subtotal
+                                ppn = (tppn.amount / 100) * price_subtotal
                     else:
                         dpp = price_subtotal
                         ppn = 0
 
-                    if 'PPH 23' in tax_name:
-                        pph23_amount = [d['PPH 23'] for d in tax_amount if 'PPH 23' in d]
-                        pph23 = pph23_amount[0] / 100 * dpp
+                    tax_pph23 = self.env['account.tax'].search([('id', 'in', tax_id), ('name', '=ilike', '%pph 23%')])
+                    if tax_pph23:
+                        for tphx in tax_pph23:
+                            pph23 = tphx.amount / 100 * dpp
                     else:
                         pph23 = 0
 
-                    if 'PPH 22' in tax_name:
-                        pph22_amount = [d['PPH 22'] for d in tax_amount if 'PPH 22' in d]
-                        pph22 = pph22_amount[0] / 100 * dpp
+                    tax_pph22 = self.env['account.tax'].search([('id', 'in', tax_id), ('name', '=ilike', '%pph 22%')])
+                    if tax_pph22:
+                        for tphy in tax_pph22:
+                            pph22 = tphy.amount / 100 * dpp
                     else:
                         pph22 = 0
 
