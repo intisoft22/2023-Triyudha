@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_kartu_stock_form" model="ir.ui.view">
+        <field name="name">kartu.stock.wizard.form</field>
+        <field name="model">kartu.stock.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Kartu Stock">
+                <group>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="kategori_produk"/>
+                    <field name="all_produk"/>
+                    <field name="produk" attrs="{'invisible': [('all_produk', '=', True)]}"/>
+                </group>
+                <footer>
+                    <button name="action_print_kartu" type="object" string="Print"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_kartu_stock" model="ir.actions.act_window">
+        <field name="name">Kartu Stock</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">kartu.stock.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_kartu_stock_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

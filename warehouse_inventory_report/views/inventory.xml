@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+
+    <menuitem id="kartu_stock_inventory"
+              name="Kartu Stock"
+              parent="stock.menu_warehouse_report"
+              action="action_kartu_stock"
+              sequence="300"/>
+
+</odoo>
