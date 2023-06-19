@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_stock_picking" model="ir.actions.report">
+        <field name="name">Serah Terima</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">warehouse_inventory_report.serah_terima_pdf</field>
+        <field name="report_file">warehouse_inventory_report.serah_terima_pdf</field>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_kartu_stock_xlsx" model="ir.actions.report">
+        <field name="name">Kartu Stock</field>
+        <field name="model">kartu.stock.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">warehouse_inventory_report.report_kartu_stock_xls</field>
+        <field name="report_file">warehouse_inventory_report.report_kartu_stock_xls</field>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

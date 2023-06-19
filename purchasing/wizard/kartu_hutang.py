@@ -140,4 +140,5 @@ class KartuHutangWizard(models.TransientModel):
             'total_kredit': total_kredit,
         }
 
+
         return self.env.ref('purchasing.report_kartu_hutang_xls').report_action(self, data=data)

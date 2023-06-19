@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="serah_terima_pdf">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+                <t t-set="data_report_margin_top" t-value="8"/>
+                <t t-set="page_count" t-value="0"/>
+                <t t-foreach="data_serah_terima" t-as="j">
+                    <t t-set="page_count" t-value="page_count + 1"/>
+                    <div class="page" style="page-break-before: always;">
+                        <style type="text/css">
+                            table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin: 0 auto;
+
+                            }
+                        </style>
+
+
+                        <div class="row" style="margin:1px; font-size:10px;">
+                            <table class="table" style="border: 1px solid black !important;" name="product">
+
+
+                                <trhead style="border: 1px solid black">
+                                    <td colspan="6" style="border: 1px solid black !important;">
+                                        <div style="width: 100%; text-align: center; font-size:12px;">
+                                            <strong>Serah Terima</strong>
+                                        </div>
+
+                                        <span>Nomor :</span>
+                                        <span t-field="o.name"/>
+                                        -
+                                        <span t-field="o.origin"/>
+                                        <br/>
+                                        <span>Gudang Asal :</span>
+                                        <span t-field="o.location_id.name"/>
+                                        <br/>
+                                        <span>Gudang Tujuan :</span>
+                                        <span t-field="o.location_dest_id.name"/>
+                                    </td>
+
+                                </trhead>
+
+
+                                <tr>
+
+                                    <td name="th_kode" class="text-center"
+                                        style="border: 1px solid black !important;">
+                                        <span>
+                                            <strong>Kode Produk</strong>
+                                        </span>
+                                    </td>
+                                    <td colspan="2" name="th_nama_produk" class="text-center"
+                                        style="border: 1px solid black !important;">
+                                        <span>
+                                            <strong>Nama Produk</strong>
+                                        </span>
+                                    </td>
+
+                                    <td name="th_qty" class="text-center"
+                                        style="border: 1px solid black !important;">
+                                        <span>
+                                            <strong>Qty</strong>
+                                        </span>
+                                    </td>
+                                    <td name="th_uom" class="text-center"
+                                        style="border: 1px solid black !important;">
+                                        <span>
+                                            <Strong>UoM</Strong>
+                                        </span>
+                                    </td>
+
+
+                                </tr>
+
+                                <t t-set="line_count" t-value="0"/>
+
+                                <t t-foreach="j" t-as="r">
+                                    <t t-set="line_count" t-value="line_count + 1"/>
+                                    <tr>
+                                        <td style="border: 1px solid black !important; padding: 3px;">
+                                            <span t-field="r.product_id.default_code"/>
+                                        </td>
+                                        <td colspan="2" style="border: 1px solid black !important; padding: 3px;">
+                                            <span t-field="r.product_id.name"/>
+                                        </td>
+                                        <td style="border: 1px solid black !important; padding: 3px;">
+                                            <span t-field="r.quantity_done"/>
+                                        </td>
+                                        <td style="border: 1px solid black !important; padding: 3px;">
+                                            <span t-field="r.product_uom.name"/>
+                                        </td>
+
+                                    </tr>
+                                </t>
+                                <t t-if="page_count == jumlah_halaman">
+                                <t t-foreach="sisa_kolom" t-as="r">
+                                    <tr>
+                                        <td style="border: 1px solid black !important; padding: 3px;">
+                                            <br/>
+                                        </td>
+                                        <td colspan="2" style="border: 1px solid black !important; padding: 3px;">
+                                            <br/>
+                                        </td>
+                                        <td style="border: 1px solid black !important; padding: 3px;">
+                                            <br/>
+                                        </td>
+                                        <td style="border: 1px solid black !important; padding: 3px;">
+                                            <br/>
+                                        </td>
+
+                                    </tr>
+                                </t>
+                                </t>
+
+                                <tr>
+                                    <td colspan="3" style="border-right: 0px solid black !important;">
+                                        <strong>Keterangan :
+                                            <span t-field="o.note"/>
+                                        </strong>
+                                        <br/>
+                                        <br/>
+
+
+                                    </td>
+                                    <td colspan="1" style="border-left: 0px solid black !important;">
+                                        <br/>
+                                        <br/>
+
+                                        <br/>
+                                        <br/>
+                                        <strong>Penerima</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+
+
+                                        <br/>
+                                        (..................................)
+                                    </td>
+                                    <td colspan="2" style="border-left: 0px solid black !important;">
+                                        <br/>
+
+
+                                        <br/>
+                                        <strong>Surabaya,
+                                            <t t-if="date_done">
+                                                <span t-field="o.date_done"/>
+                                            </t>
+                                            <t t-elif="o and 'company_id' in o">
+                                                .................
+                                            </t>
+                                        </strong>
+                                        <br/>
+                                        <br/>
+                                        <strong>Pengirim</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+
+
+                                        (..................................)
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+                <div class="footer" style="font-size: 8px;">
+                    Page :
+                    <span class="page"/>/
+                    <span class="topage"/>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>
