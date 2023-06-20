@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_kartu_persediaan"
+              name="Kartu Persediaan"
+              parent="stock.menu_warehouse_report"
+              sequence="200"
+              action="action_kartu_persediaan"/>
+
+    <menuitem id="menu_kartu_persediaan_acc"
+              name="Kartu Persediaan"
+              parent="account.menu_finance_reports"
+              sequence="200"
+              action="action_kartu_persediaan_acc"/>
+</odoo>
