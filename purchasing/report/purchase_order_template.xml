@@ -64,7 +64,7 @@
                                             <span>Telp.</span>
                                             <span t-field="company.phone"/>
                                             <span>- Fax.</span>
-                                            <span t-field="company.phone"/>
+                                            <span t-field="company.no_fax"/>
                                         </strong>
                                     </td>
                                 </tr>
