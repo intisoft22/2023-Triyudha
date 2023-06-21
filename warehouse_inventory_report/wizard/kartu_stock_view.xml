@@ -11,7 +11,7 @@
                     <field name="date_to"/>
                     <field name="kategori_produk"/>
                     <field name="all_produk"/>
-                    <field name="produk" attrs="{'invisible': [('all_produk', '=', True)]}"/>
+                    <field name="produk" widget="many2many_tags" options="{'color_field':'color'}" attrs="{'invisible': [('all_produk', '=', True)]}"/>
                 </group>
                 <footer>
                     <button name="action_print_kartu" type="object" string="Print"
