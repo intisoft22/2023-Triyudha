@@ -78,7 +78,7 @@ class StockCard(models.Model):
         warehouse_name = self.env['stock.warehouse'].search([('id', '=', warehouse_id)]).name
         location_name = self.env['stock.location'].search([('id', '=', location_id)]).name
         stockcard = self.env['stock.card'].search(
-            [('warehouse_id', '=', warehouse_id), ('location_id', '=', location_id), ('month', '=', month),
+            [('warehouse_id', '=', warehouse_id), ('location_id', '=', location_id), ('month', '=', int(month)),
              ('state', 'not in', ['draft','cancel']),
              ('year', '=', year)])
         if stockcard:
@@ -88,7 +88,7 @@ class StockCard(models.Model):
             [('warehouse_id', '=', warehouse_id), ('location_id', '=', location_id), ('state', 'not in', ['draft','cancel'])])
         if stockcard:
 
-            scnow = datetime(year, month, 1)
+            scnow = datetime(year, int(month), 1)
             stockcard = self.env['stock.card'].search(
                 [('warehouse_id', '=', warehouse_id), ('location_id', '=', location_id), ('month', '<=', month),
                  ('state', 'not in', ['draft','cancel']),
@@ -138,9 +138,9 @@ class StockCard(models.Model):
             location_name = self.env['stock.location'].search([('id', '=', location_id)]).name
 
             if upd_vals.get('month'):
-                month = upd_vals.get('month')
+                month = int(upd_vals.get('month'))
             else:
-                month = self.month
+                month = int(self.month)
             if upd_vals.get('year'):
                 year = upd_vals.get('year')
             else:
@@ -211,7 +211,7 @@ class StockCard(models.Model):
             self.categ_id = self.location_id.categ_id.id
 
     def action_confirm(self):
-        monthseblumnya = self.month - 1
+        monthseblumnya = int(self.month) - 1
         tahunseblumnya = self.year
         if self.month == 1:
             monthseblumnya = 12
@@ -531,9 +531,9 @@ class StockCardLine(models.Model):
     def action_compute(self):
         saldoawal = self.saldoawal
 
-        cwsaldoawal = 0
-        if self.product_id.catch_weight_ok:
-            cwsaldoawal = self.saldoawal * self.product_id.average_cw_quantity
+        # cwsaldoawal = 0
+        # if self.product_id.catch_weight_ok:
+        #     cwsaldoawal = self.saldoawal * self.product_id.average_cw_quantity
 
         val = {'stockcardline_id': self.id,
                'product_id': self.product_id.id,
@@ -543,15 +543,15 @@ class StockCardLine(models.Model):
                'origin': 'Saldo Awal',
                'type': False,
                'masuk': 0,
-               'cwmasuk': 0,
+               # 'cwmasuk': 0,
                'keluar': 0,
-               'cwkeluar': 0,
+               # 'cwkeluar': 0,
                'saldoakhir': self.saldoawal,
-               'cwsaldoakhir': cwsaldoawal,
+               # 'cwsaldoakhir': cwsaldoawal,
                }
         self.env['stock.card.line.detail'].create(val)
-        now = datetime(self.stockcard_id.year, self.stockcard_id.month, 1)
-        jumlah_hari = lengthmonth(self.stockcard_id.year, self.stockcard_id.month)
+        now = datetime(self.stockcard_id.year, int(self.stockcard_id.month), 1)
+        jumlah_hari = lengthmonth(self.stockcard_id.year, int(self.stockcard_id.month))
         end = now + relativedelta(days=jumlah_hari - 1)
 
         date_awal = (
@@ -590,7 +590,7 @@ class StockCardLine(models.Model):
                 type = 'Virtual'
             if m.location_dest_id in locationstock:
                 saldoawal += m.product_uom_qty
-                cwsaldoawal += m.product_cw_uom_qty
+                # cwsaldoawal += m.product_cw_uom_qty
                 val = {'product_id': m.product_id.id,
                        'move_id': m.id,
                        'picking_id': m.picking_id.id,
@@ -598,16 +598,16 @@ class StockCardLine(models.Model):
                        'origin': m.picking_id.origin,
                        'type': type,
                        'masuk': m.product_uom_qty,
-                       'cwmasuk': m.product_cw_uom_qty,
+                       # 'cwmasuk': m.product_cw_uom_qty,
                        'keluar': 0,
-                       'cwkeluar': 0,
+                       # 'cwkeluar': 0,
                        'saldoakhir': saldoawal,
-                       'cwsaldoakhir': cwsaldoawal,
+                       # 'cwsaldoakhir': cwsaldoawal,
                        'stockcardline_id': self.id, }
 
             if m.location_id in locationstock:
                 saldoawal -= m.product_uom_qty
-                cwsaldoawal -= m.product_cw_uom_qty
+                # cwsaldoawal -= m.product_cw_uom_qty
                 val = {'product_id': m.product_id.id,
                        'move_id': m.id,
                        'picking_id': m.picking_id.id,
@@ -615,11 +615,11 @@ class StockCardLine(models.Model):
                        'origin': m.picking_id.origin,
                        'type': type,
                        'masuk': 0,
-                       'cwmasuk': 0,
+                       # 'cwmasuk': 0,
                        'keluar': m.product_uom_qty,
-                       'cwkeluar': m.product_cw_uom_qty,
+                       # 'cwkeluar': m.product_cw_uom_qty,
                        'saldoakhir': saldoawal,
-                       'cwsaldoakhir': cwsaldoawal,
+                       # 'cwsaldoakhir': cwsaldoawal,
                        'stockcardline_id': self.id, }
 
             self.env['stock.card.line.detail'].create(val)
@@ -627,7 +627,7 @@ class StockCardLine(models.Model):
     def action_open(self):
         for sc in self:
             view_id = \
-                self.env['ir.model.data'].get_object_reference('in_stock_card', 'view_stock_card_line_form_detail')[1]
+                self.env['ir.model.data'].get_object_reference('mh_stock_card_tri', 'view_stock_card_line_form_detail')[1]
             if sc.state == 'done':
 
                 ret = {

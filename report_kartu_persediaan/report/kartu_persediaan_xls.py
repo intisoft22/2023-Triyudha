@@ -13,6 +13,8 @@ class KartuPersediaanXlsx(models.AbstractModel):
         bold_center = workbook.add_format({'bold': True, 'left': 1, 'bottom': 1, 'right': 1, 'top': 1, 'align': 'center', 'bg_color': 'yellow'})
         date_style = workbook.add_format({'text_wrap': True, 'left': 1, 'bottom': 1, 'right': 1, 'top': 1, 'num_format': 'dd-mmm-yyyy'})
         money_format = workbook.add_format({'text_wrap': True, 'left': 1, 'bottom': 1, 'right': 1, 'top': 1, 'num_format': '#,##0.00'})
+        int_format = workbook.add_format({'text_wrap': True,'align': 'right', 'left': 1, 'bottom': 1, 'right': 1, 'top': 1, 'num_format': '#,##0'})
+        float_format = workbook.add_format({'text_wrap': True,'align': 'right', 'left': 1, 'bottom': 1, 'right': 1, 'top': 1, 'num_format': '#,##0.00'})
         money_format_bold = workbook.add_format({'text_wrap': True, 'num_format': '#,##0.00', 'bold': True, 'left': 1, 'bottom': 1, 'right': 1, 'top': 1})
         border = workbook.add_format({'left': 1, 'bottom': 1, 'right': 1, 'top': 1})
 
@@ -87,8 +89,44 @@ class KartuPersediaanXlsx(models.AbstractModel):
                 sheet.merge_range(row, col_keluar_pcs, row, col_keluar_pcs + 1, 'Saldo Keluar', bold_center)
                 sheet.merge_range(row, col_akhir_pcs, row, col_akhir_pcs + 1, 'Saldo Akhir', bold_center)
 
+            location_id = self.env['stock.location'].search(
+                [('categ_id', '=', obj.product_category.id)], limit=1)
+            if not location_id:
+                return True
 
+            compute = self.env['stock.card'].search(
+                [('month', '=', obj.month), ('year', '=', obj.year), ('location_id', '=', location_id.id),
+                 ('state', 'in', ['inprogress', 'done'])],
+                limit=1)
+            if not compute:
+                return True
+            else:
+                if compute.state == 'inprogress':
+                    compute.compute_stock()
 
+                row += 2
+                no = 1
+                for cl in compute.line_ids:
+                    weight=cl.product_id.weight
+                    sheet.write(row, col_nama, cl.product_id.name, border)
+                    sheet.write(row, col_satuan, cl.product_id.uom_id.name, border)
+                    sheet.write(row, col_awal_pcs, cl.saldoawal, int_format)
+                    sheet.write(row, col_awal_kg, cl.saldoawal*weight, float_format)
 
+                    sheet.write(row, col_masuk_pcs, cl.masuk, int_format)
+                    sheet.write(row, col_masuk_kg,  cl.masuk*weight, float_format)
 
+                    sheet.write(row, col_keluar_pcs, cl.keluar, int_format)
+                    sheet.write(row, col_keluar_kg, cl.keluar*weight, float_format)
+
+                    sheet.write(row, col_akhir_pcs, cl.saldoakhir, int_format)
+                    sheet.write(row, col_akhir_kg, cl.saldoakhir*weight, float_format)
+
+                    if data['is_accounting']:
+                        sheet.write(row, col_awal_rp, '', float_format)
+                        sheet.write(row, col_masuk_rp, '', float_format)
+                        sheet.write(row, col_keluar_rp, '', float_format)
+                        sheet.write(row, col_akhir_rp, '', float_format)
+
+                    row+=1
 
