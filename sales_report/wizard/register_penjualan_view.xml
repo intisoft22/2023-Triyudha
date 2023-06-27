@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_register_penjualan_form" model="ir.ui.view">
+        <field name="name">register.penjualan.wizard.form</field>
+        <field name="model">register.penjualan.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Report Register Penjualan">
+                <group col="4">
+                    <field name="month"/>
+                    <field name="year"/>
+                    <field name="tax" widget="radio"/>
+                </group>
+                <footer>
+                    <button name="action_print" type="object" string="Print Report"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_register_penjualan" model="ir.actions.act_window">
+        <field name="name">Report Register Penjualan</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">register.penjualan.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_register_penjualan_form"/>
+        <field name="target">new</field>
+    </record>
+    
+</odoo>

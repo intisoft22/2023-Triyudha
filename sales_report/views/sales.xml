@@ -5,4 +5,10 @@
               parent="sale.menu_sale_report"
               sequence="100"
               action="action_faktur_penjualan"/>
+
+    <menuitem id="menu_register_penjualan"
+              name="Register Penjualan"
+              parent="sale.menu_sale_report"
+              sequence="200"
+              action="action_register_penjualan"/>
 </odoo>
