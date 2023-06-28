@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_laporan_piutang_form" model="ir.ui.view">
+        <field name="name">laporan.piutang.wizard.form</field>
+        <field name="model">laporan.piutang.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Report Laporan Piutang">
+                <group col="4">
+                    <field name="month"/>
+                    <field name="year"/>
+                </group>
+                <footer>
+                    <button name="action_print" type="object" string="Print Report"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_laporan_piutang" model="ir.actions.act_window">
+        <field name="name">Report Laporan Piutang</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">laporan.piutang.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_laporan_piutang_form"/>
+        <field name="target">new</field>
+    </record>
+    
+</odoo>
