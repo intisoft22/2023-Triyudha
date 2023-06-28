@@ -9,11 +9,16 @@ class FakturPenjualanWizard(models.TransientModel):
 
     date_from = fields.Date(string='Start Date', required=True)
     date_to = fields.Date(string='End Date', required=True)
-    tax = fields.Selection([('all', 'All'),
-                            ('non', 'Non'),
+    tax = fields.Selection([('non', 'Non'),
                             ('tax', 'Tax'),
-                            ], string='Tax', required=True, default='all')
+                            ], string='Tax', required=False, invisible=True)
 
+    all_tax = fields.Boolean(string="All", default=True, )
+
+    @api.onchange('all_tax')
+    def _onchange_all_tax(self):
+        for rec in self:
+            rec.tax = False
 
     def action_print(self):
         def daterange(start_date, end_date):

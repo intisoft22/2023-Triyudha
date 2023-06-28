@@ -32,11 +32,16 @@ class RegisterPenjualanWizard(models.TransientModel):
 
     year = fields.Integer('Year', required=True, default=lambda *a: time.gmtime()[0])
 
-    tax = fields.Selection([('all', 'All'),
-                            ('non', 'Non'),
+    tax = fields.Selection([('non', 'Non'),
                             ('tax', 'Tax'),
-                            ], string='Tax', required=True, default='all')
+                            ], string='Tax', required=False, invisible=True)
 
+    all_tax = fields.Boolean(string="All", default=True, )
+
+    @api.onchange('all_tax')
+    def _onchange_all_tax(self):
+        for rec in self:
+            rec.tax = False
 
     def action_print(self):
 

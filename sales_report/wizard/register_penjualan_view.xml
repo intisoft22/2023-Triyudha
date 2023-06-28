@@ -9,7 +9,8 @@
                 <group col="4">
                     <field name="month"/>
                     <field name="year"/>
-                    <field name="tax" widget="radio"/>
+                    <field name="all_tax"/>
+                    <field name="tax" attrs="{'invisible': [('all_tax', '=', True)]}"/>
                 </group>
                 <footer>
                     <button name="action_print" type="object" string="Print Report"
