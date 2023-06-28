@@ -8,12 +8,14 @@
     'website': '',
     'depends': [
         'sale',
+        'account',
         'report_xlsx',
     ],
     'data': [
         'security/ir.model.access.csv',
         'wizard/faktur_penjualan_view.xml',
         'wizard/register_penjualan_view.xml',
+        'wizard/laporan_piutang_view.xml',
         'views/sales.xml',
         'report/report.xml',
     ],
