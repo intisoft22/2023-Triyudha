@@ -13,10 +13,17 @@ class ProductTebal(models.Model):
 
     name =  fields.Float('Name')
 
+class ProductType(models.Model):
+    _name = "product.type"
+    _description ="Product Tipe"
+
+    name =  fields.Float('Name')
+
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    type_spec = fields.Selection([('201', '201'), ('304', '304'), ], string='Type', )
+    # type_spec = fields.Selection([('201', '201'), ('304', '304'), ], string='Type', )
+    type_spec = fields.Many2one('product.type','Tipe')
     bentuk = fields.Selection([('bulat', 'Bulat'), ('kotak', 'Kotak'), ], string='Bentuk', )
     dia = fields.Float('Diameter (mm)')
     dia_inc = fields.Float('Diameter (inc)')
@@ -25,3 +32,4 @@ class ProductTemplate(models.Model):
     khl = fields.Selection([('K', 'K'), ('HL', 'HL'), ], string='K/HL', )
     motif = fields.Many2one('product.motif','Motif')
     tebal = fields.Many2one('product.tebal','Tebal')
+    panjang_btg = fields.Float('Panjang/Btg (m)')
