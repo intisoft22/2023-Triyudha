@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_faktur_penjualan_wizard,access.faktur.penjualan.wizard,model_faktur_penjualan_wizard,,1,1,1,1
+access_register_penjualan_wizard,access.register.penjualan.wizard,model_register_penjualan_wizard,,1,1,1,1
+access_laporan_piutang_wizard,access.laporan.piutang.wizard,model_laporan_piutang_wizard,,1,1,1,1
