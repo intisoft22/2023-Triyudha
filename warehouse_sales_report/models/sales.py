@@ -2,6 +2,6 @@
 from odoo import api, fields, models
 
 
-class Inventory(models.Model):
-    _inherit = "stock.picking"
+class Sales(models.Model):
+    _inherit = "sale.order"
 
