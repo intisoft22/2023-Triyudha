@@ -30,6 +30,10 @@
                     <div >
                         <field name="tebal" class="oe_inline" style="vertical-align:baseline"/> mm
                     </div>
+                    <label for="panjang_btg" />
+                    <div >
+                        <field name="panjang_btg" class="oe_inline" style="vertical-align:baseline"/> m
+                    </div>
                     <field name="khl"/>
                     <field name="motif"/>
                 </xpath>

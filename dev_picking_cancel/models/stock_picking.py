@@ -58,8 +58,8 @@ class stock_picking(models.Model):
                     raise UserError(_("You cannot cancel this document! (More than ready quantity)"))
 
             for move in self.move_lines:
-                move._action_cancel()
                 move.quantity_done = 0
+                move._action_cancel()
                 # pack_op = self.env['stock.move'].sudo().search(
                 #         [('picking_id', '=', move.picking_id.id), ('product_id', '=', move.product_id.id)])
                 # move.set_quant_quantity(move, pack_op, move.picking_id.state)

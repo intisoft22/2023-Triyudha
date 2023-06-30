@@ -5,7 +5,7 @@
             <field name="name">product.tebal.select</field>
             <field name="model">product.tebal</field>
             <field name="arch" type="xml">
-                <search string="Search Product Tebal">
+                <search string="Search Tebal Produk">
                     <field name="name"/>
 
                 </search>
@@ -16,7 +16,7 @@
             <field name="model">product.tebal</field>
             <field eval="1" name="priority"/>
             <field name="arch" type="xml">
-                <tree string="Product Tebal">
+                <tree string="Tebal Produk">
                     <field name="name" string="Name"/>
                 </tree>
             </field>
@@ -27,7 +27,7 @@
             <field name="model">product.tebal</field>
             <field name="priority" eval="1"/>
             <field name="arch" type="xml">
-                <form string="Product Tebal">
+                <form string="Tebal Produk">
                 <sheet>
                     <group>
                         <field name="name" />
@@ -37,7 +37,7 @@
             </field>
         </record>
         <record id="action_product_tebal" model="ir.actions.act_window">
-            <field name="name">Product Tebal</field>
+            <field name="name">Tebal Produk</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.tebal</field>
             <field name="view_mode">tree,form</field>
@@ -45,12 +45,12 @@
             <field name="search_view_id" ref="view_product_tebal_filter"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
-                    Create a Product Tebal
+                    Create a Tebal Produk
                 </p>
             </field>
         </record>
         <menuitem id="menu_product_tebal"
-                  name="Product Tebal"
+                  name="Tebal Produk"
                   parent="stock.menu_product_in_config_stock"
                   action="action_product_tebal"
                   sequence="5"/>

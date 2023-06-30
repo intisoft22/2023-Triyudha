@@ -3,5 +3,7 @@ access_product_motif_user,product_motif user,model_product_motif,stock.group_sto
 access_product_motif_manager,product_motif salemanager,model_product_motif,stock.group_stock_manager,1,1,1,1
 access_product_tebal_user,product_tebal user,model_product_tebal,stock.group_stock_user,1,1,1,1
 access_product_tebal_manager,product_tebal salemanager,model_product_tebal,stock.group_stock_manager,1,1,1,1
+access_product_tipe_user,product_type user,model_product_type,stock.group_stock_user,1,1,1,1
+access_product_tipe_manager,product_type salemanager,model_product_type,stock.group_stock_manager,1,1,1,1
 access_stock_request_type_user_manager,stock_request user,model_stock_request_type,stock_request.group_stock_request_manager,1,1,1,1
 access_stock_request_type_user,stock_request user,model_stock_request_type,,1,0,0,0

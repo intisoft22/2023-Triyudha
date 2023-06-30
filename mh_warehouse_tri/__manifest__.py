@@ -13,6 +13,7 @@
         "views/product_view.xml",
         "views/product_motif_view.xml",
         "views/product_tebal_view.xml",
+        "views/product_type_view.xml",
         "views/stock_request_type_view.xml",
         "views/stock_request_view.xml",
         "views/warehouse_view.xml",
