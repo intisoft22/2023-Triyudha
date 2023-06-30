@@ -75,12 +75,13 @@ class KartuStockWizard(models.TransientModel):
                     print(dateutil.parser.parse(str(j['date'])).date())
                     if dateutil.parser.parse(str(j['date'])).date() in date_range:
                         if j['location_id'].complete_name in location_name:
-                            stock_move_range.append([dateutil.parser.parse(str(j['date'])).date(), j['picking_id'].name, j['picking_id'].note, j['product_uom_qty'], 0 ])
+                            stock_move_range.append([dateutil.parser.parse(str(j['date'])).date(), j['picking_id'].name, j['picking_id'].note, j['product_uom_qty'], 0])
                         if j['location_dest_id'].complete_name in location_name:
                             stock_move_range.append([dateutil.parser.parse(str(j['date'])).date(), j['picking_id'].name, j['picking_id'].note, 0, j['product_uom_qty']])
 
                 nama_product.append([str(i['default_code']), str(i['name']), str(i['uom_id'].name), saldo_awal, stock_move_range])
                 saldo_awal = 0
+
                 stock_move_range = []
 
 
@@ -121,10 +122,15 @@ class KartuStockWizard(models.TransientModel):
                 nama_product.append(
                     [str(i['default_code']), str(i['name']), str(i['uom_id'].name), saldo_awal, stock_move_range])
                 saldo_awal = 0
+
                 stock_move_range = []
 
 
-        data = {'product': nama_product}
+        data = {
+            'product': nama_product,
+            'start': self.date_from,
+            'end': self.date_to
+                }
 
         return self.env.ref('warehouse_inventory_report.report_kartu_stock_xlsx').report_action(self, data=data)
 
