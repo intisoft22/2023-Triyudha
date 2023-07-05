@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_pricelist_form" model="ir.ui.view">
+            <field name="name">product.pricelist.form</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group" position="before">
+                    <group>
+                                <field name="customer_id"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="exclude_tax"/>
+                                <!-- <field name="approval_status"/> -->
+                            </group>
+                            <group>
+                                <!-- <field name="base_price_id"/> -->
+                                <field name="price_method" widget="radio" string="Computed Price Method"/>
+<!--                                <button name="button_calculate_total_price" type="object" string="Calculate Total Price"-->
+<!--                                        class="btn-primary"/>-->
+                            </group>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

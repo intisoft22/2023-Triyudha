@@ -22,8 +22,8 @@ class ProductType(models.Model):
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    # type_spec = fields.Selection([('201', '201'), ('304', '304'), ], string='Type', )
-    type_spec = fields.Many2one('product.type','Tipe')
+    type_spec = fields.Selection([('201', '201'), ('304', '304'), ], string='Type', )
+    typespec = fields.Many2one('product.type','Tipe')
     bentuk = fields.Selection([('bulat', 'Bulat'), ('kotak', 'Kotak'), ], string='Bentuk', )
     dia = fields.Float('Diameter (mm)')
     dia_inc = fields.Float('Diameter (inc)')

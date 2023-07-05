@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='group_lots_and_weight']" position="inside">
-                    <field name="type_spec"/>
+                    <field name="typespec"/>
                     <field name="bentuk"/>
                     <label for="dia" attrs="{'invisible': [('bentuk', '!=', 'bulat')]}"/>
                     <div attrs="{'invisible': [('bentuk', '!=', 'bulat')]}">
