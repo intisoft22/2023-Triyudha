@@ -8,6 +8,9 @@ class SalesContractField(models.Model):
 class SalesContractFieldReciept(models.Model):
     _inherit = 'stock.move'
 
+    # order_id = fields.Many2one('purchase.order.line', string='Order Reference')
     note = fields.Char(string='Note')
-    sales_contract = fields.Many2one('sales.contract', string='Sales Contract')
+    sales_contract = fields.Many2one('sales.contract', string='Sales Contract', domain="[('status', '=', True)]")
+
+
 
