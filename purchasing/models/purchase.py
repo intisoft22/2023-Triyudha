@@ -183,6 +183,12 @@ class PurchaseOrderLine(models.Model):
                 ])
 
 
+    def _prepare_stock_moves(self, picking):
+        res = super(PurchaseOrderLine, self)._prepare_stock_moves(picking)
+        res[0]['note'] = self.note
+        res[0]['sales_contract'] = self.sales_contract.id
+        return res
+
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
