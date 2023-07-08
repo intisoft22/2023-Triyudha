@@ -7,7 +7,8 @@
     'author': 'Kevin',
     'website': '',
     'depends': [
-        'purchase'
+        'purchase',
+        'stock'
     ],
     'data': [
         'security/ir.model.access.csv',

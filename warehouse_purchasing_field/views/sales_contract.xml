@@ -7,9 +7,23 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//tree/field[last()]" position="after">
-                <field name="sales_contract" attrs="{'readonly' : [('state', 'in', ['purchase','to approve','done','cancel'])]}"/>
-
+                <field name="sales_contract" context="{'default_vendor': parent.partner_id}" attrs="{'readonly' : [('state', 'in', ['purchase','to approve','done','cancel'])]}"/>
             </xpath>
         </field>
     </record>
+
+    <record id="view_sales_contract_receipt_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.inherited</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='product_uom']" position="after">
+                <field name="note"/>
+            </xpath>
+            <xpath expr="//tree/field[@name='note']" position="after">
+                <field name="sales_contract"/>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
