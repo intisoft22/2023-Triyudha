@@ -112,16 +112,17 @@ class StockRequest(models.Model):
                 ('group_id', '=', request.order_id.procurement_group_id.id)])
             for picking in picking_ids:
                 for move in picking.move_ids_without_package:
-                    if move.product_id.id == request.product_id.id:
+                    if move.product_id.id == request.product_id.id :
                         if picking.state == 'done':
-                            if move.move_orig_ids:
+
+                            if move.location_dest_id.id == request.order_id.location_id.id:
                                 done_qty += move.quantity_done
                                 # inprogress -= move.quantity_done
-                            if move.move_dest_ids:
+                            if move.location_id.id == request.order_id.src_location_id.id:
                                 inprogress += move.quantity_done
                         if picking.state =='cancel':
 
-                            if move.move_orig_ids:
+                            if move.location_id.id == request.order_id.src_location_id.id:
                                 other_qty += move.product_uom_qty
             uom = request.product_id.uom_id
             # print(request.id)
