@@ -9,18 +9,49 @@
             <field name="arch" type="xml">
                 <xpath expr="//form/sheet/group" position="before">
                     <group>
-                                <field name="customer_id"/>
-                                <field name="start_date"/>
-                                <field name="end_date"/>
-                                <field name="exclude_tax"/>
-                                <!-- <field name="approval_status"/> -->
-                            </group>
-                            <group>
-                                <!-- <field name="base_price_id"/> -->
-                                <field name="price_method" widget="radio" string="Computed Price Method"/>
-<!--                                <button name="button_calculate_total_price" type="object" string="Calculate Total Price"-->
-<!--                                        class="btn-primary"/>-->
-                            </group>
+                        <field name="customer_id"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="exclude_tax"/>
+                        <!-- <field name="approval_status"/> -->
+                    </group>
+                    <group>
+                        <!-- <field name="base_price_id"/> -->
+                        <field name="price_method" widget="radio" string="Computed Price Method"/>
+                        <!--                                <button name="button_calculate_total_price" type="object" string="Calculate Total Price"-->
+                        <!--                                        class="btn-primary"/>-->
+                        <field name="base_price_ids" attrs="{'invisible':[('price_method','!=','base')]}">
+                            <tree>
+                                <field name="type"/>
+                                <field name="bentuk"/>
+                                <field name="base_price"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="type"/>
+                                    <field name="bentuk"/>
+                                    <field name="base_price"/>
+
+                                </group>
+                            </form>
+                        </field>
+                        <field name="change_price_ids" attrs="{'invisible':[('price_method','!=','incdec')]}">
+                            <tree>
+                                <field name="type"/>
+                                <field name="bentuk"/>
+                                <field name="inc_dec_price"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="type"/>
+                                    <field name="bentuk"/>
+                                    <field name="inc_dec_price"/>
+
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+
                 </xpath>
 
             </field>
