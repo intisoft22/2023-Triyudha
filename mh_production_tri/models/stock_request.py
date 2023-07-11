@@ -101,13 +101,18 @@ class StockRequestOrder(models.Model):
                     ('group_id', '=', order_proc_group_to_use)],order='id desc')
                 if picking:
                     for p in picking:
-                        p.action_assign()
-                        print(p.state)
-                        # for m in p.move_ids_without_package:
-                        #     for ml in m.move_line_ids:
-                        #         ml.lot_name=sro.lot_id
-                        if p.state == 'assigned':
-                            p.button_validate()
+
+
+                        if p.location_id.id == sro.src_location_id.id:
+                            p.action_assign()
+                            # print(p.state)
+                            # for m in p.move_ids_without_package:
+                            #     for ml in m.move_line_ids:
+                            #         ml.lot_name=sro.lot_id
+                            if p.state == 'assigned':
+                                p.button_validate()
+                                sro.check_done()
+
 
     check_user = fields.Boolean(
         string="Check User", store=True,
