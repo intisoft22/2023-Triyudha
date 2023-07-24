@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="paperformat_a5_lowmargin" model="report.paperformat">
+        <field name="name">European A5 low margin</field>
+        <field name="default" eval="True"/>
+        <field name="format">A5</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">1</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="report_bukti_bank_masuk" model="ir.actions.report">
+        <field name="name">Bukti Bank Masuk</field>
+        <field name="model">account.bank.statement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">om_account_report.bukti_bank_masuk_pdf</field>
+        <field name="report_file">om_account_report.bukti_bank_masuk_pdf</field>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_a5_lowmargin"/>
+    </record>
+
+    <record id="report_bukti_bank_keluar" model="ir.actions.report">
+        <field name="name">Bukti Bank Keluar</field>
+        <field name="model">account.bank.statement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">om_account_report.bukti_bank_keluar_pdf</field>
+        <field name="report_file">om_account_report.bukti_bank_keluar_pdf</field>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_a5_lowmargin"/>
+    </record>
+
+    <record id="report_bukti_kas_masuk" model="ir.actions.report">
+        <field name="name">Bukti Kas Masuk</field>
+        <field name="model">account.bank.statement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">om_account_report.bukti_kas_masuk_pdf</field>
+        <field name="report_file">om_account_report.bukti_kas_masuk_pdf</field>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_a5_lowmargin"/>
+    </record>
+
+    <record id="report_bukti_kas_keluar" model="ir.actions.report">
+        <field name="name">Bukti Kas Keluar</field>
+        <field name="model">account.bank.statement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">om_account_report.bukti_kas_keluar_pdf</field>
+        <field name="report_file">om_account_report.bukti_kas_keluar_pdf</field>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_a5_lowmargin"/>
+    </record>
+
+    <record id="report_rincian_kas_bank_xlsx" model="ir.actions.report">
+        <field name="name">Rincian Kas Bank</field>
+        <field name="model">rincian.kas.bank.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">om_account_report.report_rincian_kas_bank_xls</field>
+        <field name="report_file">om_account_report.report_rincian_kas_bank_xls</field>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>
