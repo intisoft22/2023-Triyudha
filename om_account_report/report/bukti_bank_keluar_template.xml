@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="bukti_bank_keluar_pdf">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.basic_layout">
+                <t t-set="data_report_margin_top" t-value="8"/>
+                <t t-set="page_count" t-value="0"/>
+                <t t-foreach="data_bukti_bank_masuk" t-as="j">
+                    <t t-set="page_count" t-value="page_count + 1"/>
+                    <div class="page" style="page-break-before: always;">
+                        <style type="text/css">table {
+                            border-collapse:
+                            collapse;
+                            width: 100%;
+                            margin: 0 auto;}
+                        </style>
+
+                        <div class="row" style="margin:1px; font-size:10px;">
+                            <table class="table" style="border: 1px solid black !important;" name="product">
+                                <trhead style="border: 1px solid black">
+                                    <td colspan="3" style="border: 1px solid black !important">
+                                        <span>Dibayarkan Kepada :</span>
+                                    </td>
+                                    <td colspan="3"
+                                        style="border: 1px solid black !important; text-align: center; font-size: 14px;">
+                                        <strong>BUKTI BANK KELUAR</strong>
+                                    </td>
+
+                                    <td colspan="1" style="border: 1px solid black !important;">
+                                        <span>Nomor :</span> <span t-esc="o.name"/>
+                                        <br/>
+                                        <span>Tanggal :</span> <span t-esc="o.date"/>
+                                        <br/>
+                                    </td>
+                                </trhead>
+
+                                <tr>
+                                    <td colspan="1" name="th_empty" class="text-center"
+                                        style="border-bottom: 0px; width: 100px;">
+                                        <span>
+                                            <br/>
+                                        </span>
+                                    </td>
+
+                                    <td colspan="2" name="th_perkiraan" class="text-center"
+                                        style="border: 1px solid black !important; background-color:#CCCCCC;">
+                                        <span>
+                                            <strong>Perkiraan</strong>
+                                        </span>
+                                    </td>
+                                    <td colspan="3" name="th_uraian" class="text-center"
+                                        style="border: 1px solid black !important; background-color:#CCCCCC;">
+                                        <span>
+                                            <Strong>Uraian</Strong>
+                                        </span>
+                                    </td>
+                                    <td colspan="1" name="th_jumlah" class="text-center"
+                                        style="border: 1px solid black !important; background-color:#CCCCCC;">
+                                        <span>
+                                            <Strong>JUMLAH</Strong>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <t t-set="line_count" t-value="0"/>
+                                <t t-foreach="j" t-as="r">
+                                    <t t-set="line_count" t-value="line_count + 1"/>
+                                    <tr>
+                                        <td colspan="1" style="border-bottom: 0px; border-top: 0px; padding: 3px;">
+                                            <br/>
+                                        </td>
+                                        <t t-if="line_count == 1">
+                                            <td colspan="1" rowspan="11"
+                                                style="max-width: 20px; margin: 0px; padding: 0px; padding-top: 110px; border-bottom: 0px; border-top: 0px; border-left: 1px solid black;">
+                                                <div style="margin-left: -35px; padding: 0px; width: 100px; align: center; -webkit-transform: rotate(270deg); -moz-transform: rotate(270deg); -o-transform: rotate(270deg); -ms-transform: rotate(270deg); transform: rotate(270deg);">
+                                                    KEPERLUAN INTERN
+                                                </div>
+                                            </td>
+                                        </t>
+                                        <td colspan="1"
+                                            style="width: 100px;border: 1px solid black !important; padding: 3px">
+                                            <br/>
+                                        </td>
+                                        <td colspan="3" style="border: 1px solid black !important; padding: 3px;">
+                                            <span t-esc="r[0]"/>
+                                        </td>
+                                        <td colspan="1" style="border: 1px solid black !important; padding: 3px;">
+                                            <span t-esc="r[1]"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-set="line_num" t-value="0"/>
+                                <t t-if="page_count == jumlah_halaman">
+                                    <t t-foreach="sisa_kolom" t-as="r">
+                                        <t t-set="line_num" t-value="line_num + 1"/>
+                                        <tr>
+                                            <td colspan="1" style="border-bottom: 0px; border-top: 0px; padding: 3px;">
+                                                <br/>
+                                            </td>
+                                            <t t-if="line_num == 1 and jum == 0">
+                                            <td colspan="1" rowspan="11"
+                                                style="max-width: 20px; margin: 0px; padding: 0px; padding-top: 110px; border-bottom: 0px; border-top: 0px; border-left: 1px solid black;">
+                                                <div style="margin-left: -35px; padding: 0px; width: 100px; align: center; -webkit-transform: rotate(270deg); -moz-transform: rotate(270deg); -o-transform: rotate(270deg); -ms-transform: rotate(270deg); transform: rotate(270deg);">
+                                                    KEPERLUAN INTERN
+                                                </div>
+                                            </td>
+                                        </t>
+                                            <td colspan="1"
+                                                style="width: 100; border: 1px solid black !important; padding: 3px;">
+                                                <br/>
+                                            </td>
+                                            <td colspan="3" style="border: 1px solid black !important; padding: 3px;">
+                                                <br/>
+                                            </td>
+                                            <td colspan="1" style="border: 1px solid black !important; padding: 3px;">
+                                                <br/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <tr>
+                                    <td colspan="1" style="border-bottom: 0px; border-top: 0px; padding: 3px;">
+                                        <br/>
+                                    </td>
+                                    <td colspan="1"
+                                        style="width: 100; border: 1px solid black !important; padding: 3px;">
+                                        Ch/G,B.No. :
+                                    </td>
+                                    <td colspan="3" style="border: 1px solid black !important; padding: 3px; text-align: right">
+                                        <strong>TOTAL :</strong>
+                                    </td>
+                                    <td colspan="1" style="border: 1px solid black !important; padding: 3px;">
+                                        <span t-esc="amount"/>
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    <td colspan="1"
+                                        style="border: 1px solid black !important; padding: 3px;">
+                                        <strong>Terbilang :</strong>
+                                    </td>
+                                    <td colspan="6"
+                                        style="border: 1px solid black !important; padding: 3px; background-color:#CCCCCC;">
+                                        <span t-esc="terbilang"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="text-left"
+                                        style="border: 1px solid black !important;">
+                                        <strong>CATATAN :</strong>
+                                    </td>
+                                    <td colspan="1" name="th_nama_produk" class="text-center"
+                                        style="border: 1px solid black !important;">
+                                        <strong>Pembukuan</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        (..................................)
+                                    </td>
+                                    <td colspan="1" name="th_nama_produk" class="text-center"
+                                        style="border: 1px solid black !important;">
+                                        <strong>Mengetahui</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        (..................................)
+                                    </td>
+                                    <td colspan="1" name="th_nama_produk" class="text-center"
+                                        style="border: 1px solid black !important;">
+                                        <strong>Kasir</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        (..................................)
+                                    </td>
+                                    <td colspan="1" name="th_nama_produk" class="text-center"
+                                        style="border: 1px solid black !important;">
+                                        <strong>Penerima</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        (..................................)
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <menuitem id="rincian_kas_bank_menu"
+              name="Rincian Kas / Bank"
+              parent="account.menu_finance_reports"
+              action="action_rincian_kas_bank"
+              sequence="100"/>
+</odoo>
