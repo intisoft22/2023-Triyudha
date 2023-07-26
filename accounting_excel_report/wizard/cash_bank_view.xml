@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <odoo>
 
-    <record id="view_rincian_kas_bank_form" model="ir.ui.view">
-        <field name="name">rincian.kas.bank.wizard.form</field>
-        <field name="model">rincian.kas.bank.wizard</field>
+    <record id="view_cash_bank_form" model="ir.ui.view">
+        <field name="name">cash.bank.wizard.form</field>
+        <field name="model">cash.bank.wizard</field>
         <field name="arch" type="xml">
-            <form string="Rincian Kas Bank">
+            <form string="Rincian">
                 <group>
                     <field name="journal" domain="['|',('type','=','cash'),('type','=','bank')]"/>
                     <field name="date_from"/>
@@ -20,12 +20,12 @@
         </field>
     </record>
 
-    <record id="action_rincian_kas_bank" model="ir.actions.act_window">
-        <field name="name">Rincian Kas Bank</field>
+    <record id="action_cash_bank" model="ir.actions.act_window">
+        <field name="name">Cash Bank</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">rincian.kas.bank.wizard</field>
+        <field name="res_model">cash.bank.wizard</field>
         <field name="view_mode">form</field>
-        <field name="view_id" ref="view_rincian_kas_bank_form"/>
+        <field name="view_id" ref="view_cash_bank_form"/>
         <field name="target">new</field>
     </record>
 

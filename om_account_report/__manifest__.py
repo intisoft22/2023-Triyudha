@@ -8,7 +8,6 @@
     'website': '',
     'depends': [
         'account',
-        'report_xlsx'
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -18,7 +17,7 @@
         'report/bukti_bank_keluar_template.xml',
         'report/bukti_kas_masuk_template.xml',
         'report/bukti_kas_keluar_template.xml',
-        'wizard/rincian_kas_bank_view.xml'
+
     ],
     'installable': True,
     'auto_install': False,
