@@ -60,13 +60,5 @@
         <field name="paperformat_id" ref="paperformat_a5_lowmargin"/>
     </record>
 
-    <record id="report_rincian_kas_bank_xlsx" model="ir.actions.report">
-        <field name="name">Rincian Kas Bank</field>
-        <field name="model">rincian.kas.bank.wizard</field>
-        <field name="report_type">xlsx</field>
-        <field name="report_name">om_account_report.report_rincian_kas_bank_xls</field>
-        <field name="report_file">om_account_report.report_rincian_kas_bank_xls</field>
-        <field name="binding_type">report</field>
-    </record>
 
 </odoo>

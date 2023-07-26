@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_cash_bank_xlsx" model="ir.actions.report">
+        <field name="name">Kas Bank</field>
+        <field name="model">cash.bank.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">accounting_excel_report.report_cash_bank_xls</field>
+        <field name="report_file">accounting_excel_report.report_cash_bank_xls</field>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

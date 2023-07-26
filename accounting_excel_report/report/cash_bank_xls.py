@@ -8,8 +8,8 @@ def date_to_tanggal(st):
     bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober',
              'November', 'Desember']
     return date_split[2] + " " + bulan[int(date_split[1]) - 1] + " " + date_split[0]
-class RincianKasBankXlsx(models.AbstractModel):
-    _name = 'report.om_account_report.report_rincian_kas_bank_xls'
+class CashBankXlsx(models.AbstractModel):
+    _name = 'report.accounting_excel_report.report_cash_bank_xls'
     _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, stock):
