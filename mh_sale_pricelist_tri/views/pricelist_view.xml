@@ -7,20 +7,34 @@
             <field name="model">product.pricelist</field>
             <field name="inherit_id" ref="product.product_pricelist_view"/>
             <field name="arch" type="xml">
+                <xpath expr="//form/sheet" position="before">
+                    <header>
+                        <button id="button_draft" name="action_draft" states="cancel" string="Set to Draft" class="btn-primary"
+                                type="object"/>
+                        <button id="button_submit" name="action_submit"  states="draft"  string="Submit" class="btn-primary"
+                                type="object"/>
+                        <button id="button_approve" name="action_approve" states="waiting" string="Approved" class="btn-primary"
+                                type="object"/>
+                        <button id="button_cancel" name="action_cancel" string="cancel"
+                                states="draft,waiting,approved" type="object"/>
+                        <field name="state"
+                               widget="statusbar"
+                               statusbar_visible="draft,waiting,approved"/>
+                    </header>
+                </xpath>
                 <xpath expr="//form/sheet/group" position="before">
                     <group>
                         <field name="customer_id"/>
                         <field name="start_date"/>
                         <field name="end_date"/>
                         <field name="exclude_tax"/>
+                        <field name="price_method" widget="radio" string="Computed Price Method"/>
                         <!-- <field name="approval_status"/> -->
                     </group>
                     <group>
                         <!-- <field name="base_price_id"/> -->
-                        <field name="price_method" widget="radio" string="Computed Price Method"/>
-                        <!--                                <button name="button_calculate_total_price" type="object" string="Calculate Total Price"-->
-                        <!--                                        class="btn-primary"/>-->
-                        <field name="base_price_ids" attrs="{'invisible':[('price_method','!=','base')]}">
+
+                        <field name="base_price_ids" nolabel="1" attrs="{'invisible':[('price_method','!=','base')]}">
                             <tree>
                                 <field name="type"/>
                                 <field name="bentuk"/>
@@ -35,7 +49,7 @@
                                 </group>
                             </form>
                         </field>
-                        <field name="change_price_ids" attrs="{'invisible':[('price_method','!=','incdec')]}">
+                        <field name="change_price_ids" nolabel="1" attrs="{'invisible':[('price_method','!=','incdec')]}">
                             <tree>
                                 <field name="type"/>
                                 <field name="bentuk"/>
@@ -50,6 +64,9 @@
                                 </group>
                             </form>
                         </field>
+                        <br/>
+                         <button name="action_compute" type="object" string="Compute"
+                                class="btn-primary oe_inline" nolabel="1"/>
                     </group>
 
                 </xpath>
