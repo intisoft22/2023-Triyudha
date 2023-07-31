@@ -20,23 +20,23 @@ class InvoiceResi(models.AbstractModel):
                      'November', 'Desember']
             return date_split[2] + " " + bulan[int(date_split[1]) - 1] + " " + date_split[0]
 
-        docs = self.env['sale.order'].browse(docids)
+        docs = self.env['account.move'].browse(docids)
         arr = []
         jumlah_record = 0
         co = 0
         today = date.today()
-        docs2 = self.env['sale.order'].browse(docids)
+        docs2 = self.env['account.move'].browse(docids)
         date_now = str(today.strftime("%d-%m-%Y"))
         halaman = 0
         nomor = ""
         ter = num2words(docs.amount_total, lang="id")
 
         for rec in docs:
-            jumlah_record = len(rec.order_line)
-            jumlah_record2 = len(rec.order_line)
-            if rec.order_line:
-                new_list = [rec.order_line[i:i + 10] for i in
-                            range(0, len(rec.order_line), 10)]
+            jumlah_record = len(rec.invoice_line_ids)
+            jumlah_record2 = len(rec.invoice_line_ids)
+            if rec.invoice_line_ids:
+                new_list = [rec.invoice_line_ids[i:i + 10] for i in
+                            range(0, len(rec.invoice_line_ids), 10)]
             else:
                 new_list = False
 
@@ -52,15 +52,17 @@ class InvoiceResi(models.AbstractModel):
             arr.append(i)
 
         for i in docs2:
-            for j in i.order_line:
+            for j in i.invoice_line_ids:
                 co = co + int(j.price_subtotal)
-        tgl_faktur = str(docs2['date_order'])
+        tgl_faktur = str(docs2['invoice_date'])
         tgl_faktur = dateutil.parser.parse(tgl_faktur).date()
         tgl_faktur = date_to_tanggal(str(tgl_faktur))
 
+
+
         return {
             'doc_ids': docids,
-            'doc_model': 'sale_order',
+            'doc_model': 'account_move',
             'docs': docs,
             'data_order_pembelian': new_list,
             'sisa_kolom': arr,

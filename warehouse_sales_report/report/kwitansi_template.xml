@@ -124,7 +124,7 @@
                                 <span>:</span>
                             </td>
                             <td colspan="7" style="border-bottom: 1px solid black; padding: 4px">
-                                NOTA : <span t-field="o.name"/>
+                                NOTA : <span t-field="o.ref"/>
                             </td>
                         </tr>
                         <tr>

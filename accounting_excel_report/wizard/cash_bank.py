@@ -6,6 +6,8 @@ import dateutil.parser
 from datetime import timedelta, date
 import dateutil.parser
 import datetime
+
+
 class CashBankWizard(models.TransientModel):
     _name = "cash.bank.wizard"
     _description = "Cash Bank Wizard"
@@ -29,7 +31,7 @@ class CashBankWizard(models.TransientModel):
 
         account_move_line = self.env['account.move.line'].search([
             ("journal_id", "=", self.journal['name'])
-        ])
+        ], order='date asc')
 
         list_saldo = []
         for i in account_move_line:
@@ -69,5 +71,3 @@ class CashBankWizard(models.TransientModel):
         }
 
         return self.env.ref('accounting_excel_report.report_cash_bank_xlsx').report_action(self, data=data)
-
-

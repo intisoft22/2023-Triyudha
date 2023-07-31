@@ -16,7 +16,7 @@ class SuratJalan(models.AbstractModel):
             bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober',
                      'November', 'Desember']
             return date_split[0] + " " + bulan[int(date_split[1]) - 1] + " " + date_split[2]
-        docs = self.env['sale.order'].browse(docids)
+        docs = self.env['stock.picking'].browse(docids)
         arr = []
         jumlah_record = 0
         co = 0
@@ -25,11 +25,11 @@ class SuratJalan(models.AbstractModel):
         halaman = 0
 
         for rec in docs:
-            jumlah_record = len(rec.order_line)
-            jumlah_record2 = len(rec.order_line)
-            if rec.order_line:
-                new_list = [rec.order_line[i:i + 10] for i in
-                            range(0, len(rec.order_line), 10)]
+            jumlah_record = len(rec.move_ids_without_package)
+            jumlah_record2 = len(rec.move_ids_without_package)
+            if rec.move_ids_without_package:
+                new_list = [rec.move_ids_without_package[i:i + 10] for i in
+                            range(0, len(rec.move_ids_without_package), 10)]
             else:
                 new_list = False
 
@@ -49,7 +49,7 @@ class SuratJalan(models.AbstractModel):
             co = co + int(i.price_subtotal)
         return {
             'doc_ids': docids,
-            'doc_model': 'sale_order',
+            'doc_model': 'stock_picking',
             'docs': docs,
             'data_order_pembelian': new_list,
             'sisa_kolom': arr,

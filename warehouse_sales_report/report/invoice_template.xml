@@ -43,7 +43,7 @@
                                         <span t-field="o.name"/>
                                         <br/>
                                         <span>NO PO :</span>
-                                        <span t-field="o.name"/>
+                                        <span t-field="o.invoice_origin"/>
 
 
                                     </td>
@@ -113,7 +113,7 @@
                                             <span t-field="r.product_id.name"/>
                                         </td>
                                         <td style="border: 1px solid black !important; padding: 3px;">
-                                            <span t-field="r.product_uom_qty"/>
+                                            <span t-field="r.product_uom_id"/>
                                         </td>
                                         <td style="border: 1px solid black !important; padding: 3px;">
                                             <span t-field="r.price_unit"/>
