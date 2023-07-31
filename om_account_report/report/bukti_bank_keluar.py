@@ -36,7 +36,7 @@ class BuktiBankKeluar(models.AbstractModel):
                     co += 1
                     co2 = 0
                     jumlah_amount += int(it.amount)
-                    tmp_list.append([it.payment_ref, "Rp -" + formatrupiah(int(it.amount))])
+                    tmp_list.append([it.payment_ref, "Rp " + formatrupiah(int(it.amount))])
                 if co == 10:
                     co2 = 1
                     co = 0
@@ -60,6 +60,6 @@ class BuktiBankKeluar(models.AbstractModel):
             'sisa_kolom': arr,
             'jumlah_halaman': halaman,
             'terbilang': ter,
-            'amount': "Rp -" + formatrupiah(int(jumlah_amount)),
+            'amount': "Rp " + formatrupiah(int(jumlah_amount)),
             'jum': jum_data
         }

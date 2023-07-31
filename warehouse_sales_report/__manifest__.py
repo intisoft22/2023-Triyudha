@@ -8,7 +8,9 @@
     'website': '',
     'depends': [
         'sale',
-        'sale_management'
+        'sale_management',
+        'stock',
+        'account'
     ],
     'data': [
         'security/ir.model.access.csv',
