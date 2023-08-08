@@ -26,6 +26,7 @@ class CustomerChangePrice(models.Model):
 class ProductPricelist(models.Model):
     _inherit = 'product.pricelist'
 
+    multipricelist_id = fields.Many2one('multi.product.pricelist', string='Pricelist')
     customer_id = fields.Many2one('res.partner', string='Customer', domain="[('customer_rank', '>', 0)]")
     start_date = fields.Date(string='Start Date')
     end_date = fields.Date(string='End Date', readonly=True)
