@@ -1,3 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_customer_base_price,access.customer.base.price,model_customer_base_price,,1,1,1,1
 access_customer_change_price,access.customer.change.price,model_customer_change_price,,1,1,1,1
+access_multi_customer_base_price,access.multi.customer.base.price,model_multi_customer_base_price,,1,1,1,1
+access_multi_customer_change_price,access.multi.customer.change.price,model_multi_customer_change_price,,1,1,1,1
+access_multi_product_pricelist,access.multi.product.pricelist,model_multi_product_pricelist,,1,1,1,1

@@ -15,6 +15,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/pricelist_view.xml',
+        'views/multipricelist_view.xml',
     ],
     'installable': True,
     'auto_install': True,

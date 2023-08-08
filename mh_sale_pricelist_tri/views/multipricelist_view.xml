@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record model="ir.ui.view" id="multi_product_pricelist_view_search">
+            <field name="name">multi.product.pricelist.search</field>
+            <field name="model">multi.product.pricelist</field>
+            <field name="arch" type="xml">
+                <search string="Products Price Search">
+                    <field name="name" string="Products Price"/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="groupby_state" domain="[]" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="multi_product_pricelist_view_tree" model="ir.ui.view">
+            <field name="name">multi.product.pricelist.tree</field>
+            <field name="model">multi.product.pricelist</field>
+            <field name="arch" type="xml">
+                <tree string="Products Price List" sample="1">
+                    <field name="name"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="multi_product_pricelist_view" model="ir.ui.view">
+            <field name="name">multi.product.pricelist.form</field>
+            <field name="model">multi.product.pricelist</field>
+            <field name="arch" type="xml">
+                <form string="Products Price List">
+
+                    <header>
+                        <button id="button_draft" name="action_draft" states="cancel" string="Set to Draft"
+                                class="btn-primary"
+                                type="object"/>
+                        <button id="button_submit" name="action_submit" states="draft" string="Submit"
+                                class="btn-primary"
+                                type="object"/>
+                        <button id="button_approve" name="action_approve" states="waiting" string="Approved"
+                                class="btn-primary"
+                                type="object"/>
+                        <button id="button_cancel" name="action_cancel" string="cancel"
+                                states="draft,waiting,approved" type="object"/>
+                        <field name="state"
+                               widget="statusbar"
+                               statusbar_visible="draft,waiting,approved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="e.g. USD Retailers"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="customer_id" widget="many2many_tags"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="exclude_tax"/>
+                                <field name="price_method" widget="radio" string="Computed Price Method"/>
+                                <!-- <field name="approval_status"/> -->
+                            </group>
+
+                        </group>
+                        <group>
+                            <!-- <field name="base_price_id"/> -->
+
+                            <field name="base_price_ids" nolabel="1"
+                                   attrs="{'invisible':[('price_method','!=','base')]}"
+                                   context="{'default_customer_ids': customer_id }">
+                                <tree>
+                                    <field name="customer_ids" invisible="1"/>
+                                    <field name="customer_id"/>
+                                    <field name="type"/>
+                                    <field name="bentuk"/>
+                                    <field name="base_price"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="customer_id_domain" invisible="1"/>
+                                        <field name="customer_ids"/>
+                                        <field name="customer_id" domain="customer_id_domain"/>
+                                        <field name="type"/>
+                                        <field name="bentuk"/>
+                                        <field name="base_price"/>
+
+                                    </group>
+                                </form>
+                            </field>
+                            <field name="change_price_ids" nolabel="1"
+                                   attrs="{'invisible':[('price_method','!=','incdec')]}"
+                                   context="{'default_customer_ids': customer_id }">
+                                <tree>
+                                    <field name="customer_ids" invisible="1"/>
+                                    <field name="customer_id"/>
+                                    <field name="type"/>
+                                    <field name="bentuk"/>
+                                    <field name="inc_dec_price"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="customer_id_domain" invisible="1"/>
+                                        <field name="customer_ids"/>
+                                        <field name="customer_id" domain="customer_id_domain"/>
+                                        <field name="type"/>
+                                        <field name="bentuk"/>
+                                        <field name="inc_dec_price"/>
+
+                                    </group>
+                                </form>
+                            </field>
+                            <br/>
+                            <button name="action_compute" type="object" string="Compute"
+                                    class="btn-primary oe_inline" nolabel="1"/>
+                        </group>
+                        <notebook>
+                            <page name="pricelist_list" string="Pricelist">
+                                <field name="item_ids" nolabel="1">
+
+                                </field>
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="multi_product_pricelist_action2" model="ir.actions.act_window">
+            <field name="name">Generate Pricelists</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">multi.product.pricelist</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="multi_product_pricelist_view_search"/>
+            <field name="context">{"default_base":'list_price'}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new pricelist
+                </p>
+                <p>
+                    A price is a set of sales prices or rules to compute the price of sales order lines based on
+                    products, product categories, dates and ordered quantities.
+                    This is the perfect tool to handle several pricings, seasonal discounts, etc.
+                </p>
+                <p>
+                    You can assign pricelists to your customers or select one when creating a new sales quotation.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_multi_product_pricelist_main" name="Generate Pricelists" parent="sale.product_menu_catalog"
+                  action="multi_product_pricelist_action2" groups="product.group_product_pricelist" sequence="3"/>
+
+
+    </data>
+</odoo>
