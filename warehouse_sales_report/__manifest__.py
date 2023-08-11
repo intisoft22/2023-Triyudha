@@ -15,11 +15,13 @@
     'data': [
         'security/ir.model.access.csv',
         'views/sales.xml',
+        'views/nopol.xml',
         'report/report.xml',
         'report/order_pembelian_template.xml',
         'report/surat_jalan_template.xml',
         'report/invoice_template.xml',
-        'report/kwitansi_template.xml'
+        'report/kwitansi_template.xml',
+
 
     ],
     'installable': True,

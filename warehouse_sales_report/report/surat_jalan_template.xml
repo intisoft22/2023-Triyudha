@@ -43,7 +43,7 @@
                                         <span t-field="o.name"/>
                                         <br/>
                                         <span>NOPOL :</span>
-
+                                        <span t-field="o.no_polisi"/>
 
                                     </td>
                                     <td colspan="4" style="border: 1px solid black !important;">
@@ -86,6 +86,7 @@
                                         <span>
                                             <Strong>Keterangan</Strong>
                                         </span>
+
                                     </td>
 
 
@@ -142,6 +143,7 @@
                                 <tr>
                                     <td colspan="3" style="border-right: 0px solid black !important;">
                                         <strong>Keterangan : </strong>
+                                        <span t-field="o.note"/>
                                         <br/>
                                         <br/>
 
